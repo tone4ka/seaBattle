@@ -2,10 +2,13 @@ const express = require('express');
 const Handlebars = require("handlebars");
 const exphbs = require("express-handlebars");
 const path = require('path');
+const mongoose = require('mongoose');
 const PORT = process.env.PORT || 3000;
 const usersRoutes = require('./routes/users');
 const registrationRoutes = require('./routes/registration');
 const homeRoutes = require('./routes/home');
+const User = require('./models/user');
+
 
 const {
     allowInsecurePrototypeAccess,
@@ -25,8 +28,30 @@ app.use('/', homeRoutes);
 app.use('/users', usersRoutes);
 app.use('/registration', registrationRoutes);
 
-
-
-app.listen(PORT, () => {
+async function start() {
+  try {
+    const url = 'mongodb+srv://tonia2:VikpBhS70Tmw3hqP@cluster0.wdbfb.mongodb.net/seabattle?retryWrites=true&w=majority';
+    console.log('tonia2:VikpBhS70Tmw3hqP');
+    await mongoose.connect(url, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+      useFindAndModify: false
+    });
+    const candidate = await User.findOne(); // без параметров находим есть ли там хотя бы один пользователь(в базе данных)
+    if(!candidate) {
+      const user = new User({
+        email: 'vasia@gmail.com',
+        name: 'vasia'
+      })
+      await user.save();
+    }
+  app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
   });
+  } catch (e) {
+    console.log(e);
+  }
+}
+    start();
+
+
