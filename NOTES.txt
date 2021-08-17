@@ -1,0 +1,2 @@
+как очищать сессию при закрытии страницы????
+https://progi.pro/ekspress-seans-zavershenie-seansa-pri-zakritii-vkladkibrauzera-10783805

@@ -2,24 +2,27 @@
     <div class="nav-wrapper">
       <a href="#" class="brand-logo">Sea battle</a>
       <ul id="nav-mobile" class="right hide-on-med-and-down">
-{{#if isHome}}
-        <li class="active"><a href="/">Home page</a></li>
-{{else}}
-        <li><a href="/">Home page</a></li>
-{{/if}}
 
-{{#if isRegistration}}
-        <li class="active"><a href="/registration">Registration</a></li>
-{{else}}
-         <li><a href="/registration">Registration</a></li>
-{{/if}}
+{{#if isAuth}}
+        {{#if isHome}}
+                <li class="active"><a href="/">Home page</a></li>
+        {{else}}
+                <li><a href="/">Home page</a></li>
+        {{/if}}
 
-{{#if isUsers}}
-        <li class="active"><a href="/users">Users</a></li>
+        {{#if isUsers}}
+                <li class="active"><a href="/users">Users</a></li>
+        {{else}}
+                <li><a href="/users">Users</a></li>
+        {{/if}}
+        <li><a href="/auth/logout">Sign out</a></li>
 {{else}}
-        <li><a href="/users">Users</a></li>
+        {{#if isLogin}}
+                <li class="active"><a href="/auth/login#login">Sign in</a></li>
+        {{else}}
+                <li><a href="/auth/login#login">Sign in</a></li>
+        {{/if}}
 {{/if}}
-
       </ul>
     </div>
   </nav>
