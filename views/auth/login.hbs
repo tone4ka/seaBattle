@@ -3,8 +3,8 @@
     <div class="row">
         <div class="col s12">
         <ul class="tabs">
-            <li class="tab col s6"><a class="active" href="#login">Войти</a></li>
-            <li class="tab col s6"><a  href="#register">Регистрация</a></li>
+            <li class="tab col s6"><a class="active" href="#login">Sign In</a></li>
+            <li class="tab col s6"><a  href="#register">Register</a></li>
         </ul>
         </div>
         <div id="login" class="col s6 offset-s3">
@@ -13,23 +13,23 @@
                 <p class="alert">{{loginError}}</p>
             {{/if}}
 
-            <h2>Войти в магазин</h2>
+            <h2>Sign in Sea Battle</h2>
             <form action="/auth/login" method="POST">
                 <div class="input-field">
                     <input id="email" name="email" type="email" class="validate" required>
                     <label for="email">E-mail</label>
-                    <span class="helper-text" data-error="введите e-mail"></span>
+                    <span class="helper-text" data-error="input e-mail"></span>
                 </div>
 
                 <div class="input-field">
                     <input id="password" name="password" type="password" class="validate" required>
-                    <label for="password">Пароль</label>
-                    <span class="helper-text" data-error="введите пароль"></span>
+                    <label for="password">Password</label>
+                    <span class="helper-text" data-error="input password"></span>
                 </div>
 
                 <input type="hidden" name='_csrf' value='{{csrf}}'>
-                <p><a href="/auth/reset">Забыли пароль?</a></p>
-                <button  class="btn btn-primary" type="submit">Войти</button>
+                <p><a href="/auth/reset">Forgot your password?</a></p>
+                <button  class="btn btn-primary" type="submit">Sign in</button>
             </form>
         </div>
 
@@ -39,7 +39,7 @@
                 <p class="alert">{{registerError}}</p>
             {{/if}}
 
-            <h2>Создать аккаунт</h2>
+            <h2>Create an account</h2>
             <form action="/auth/register" method="POST">
                 <div class="input-field">
                     <input id="remail" name="email" type="email" class="validate" required>
@@ -49,22 +49,22 @@
 
                 <div class="input-field">
                     <input id="rpassword" name="password" type="password" class="validate" required>
-                    <label for="rpassword">Пароль</label>
+                    <label for="rpassword">Password</label>
                     <span class="helper-text" data-error="введите пароль"></span>
                 </div>
                 <div class="input-field">
                     <input id="confirm" name="confirm" type="password" class="validate" required>
-                    <label for="confirm">Повторите пароль</label>
+                    <label for="confirm">Confirm you password</label>
                     <span class="helper-text" data-error="введите пароль"></span>
                 </div>
                 <div class="input-field">
                     <input id="name" name="name" type="text" class="validate" required>
-                    <label for="name">Введите имя</label>
+                    <label for="name">Name</label>
                     <span class="helper-text" data-error="введите имя"></span>
                 </div>
 
                 <input type="hidden" name='_csrf' value='{{csrf}}'>
-                <button  class="btn btn-primary" type="submit">Зарегистрироваться</button>
+                <button  class="btn btn-primary" type="submit">Register</button>
             </form>
         </div>
     </div>
