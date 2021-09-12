@@ -15,3 +15,13 @@ padding-top: 1rem;
     background-color: rgba(255, 0, 0, .3);
     color: red;
 }
+.btn.btn-blue {
+    background-color: rgb(2, 95, 156);
+}
+.currentUserName {
+    display: block;
+    font-style: italic;
+    padding-left: 20px;
+    color: rgb(255, 255, 255);
+    background: linear-gradient(to right, rgb(2, 95, 156), #ffffff, #ffffff, #ffffff);
+}

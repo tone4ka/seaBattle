@@ -1,6 +1,7 @@
  <nav class="nav">
     <div class="nav-wrapper">
-      <a href="/" class="brand-logo">Sea battle</a>
+      <a href="/" class="brand-logo">Sea battle </a>
+      
       <ul id="nav-mobile" class="right hide-on-med-and-down">
 
 {{#if isAuth}}
@@ -26,3 +27,4 @@
       </ul>
     </div>
   </nav>
+  {{#if isAuth}}<div class="currentUserName"><p>Flotilia captain {{{currentUserName}}}</p></div> {{/if}}

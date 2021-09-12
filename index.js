@@ -13,12 +13,14 @@ const homeRoutes = require("./routes/home");
 const authRoutes = require("./routes/auth");
 const keys = require("./keys"); //сюда вынесли переменные
 const varMiddleware = require("./middleware/variables");
-
-
+const usersMiddleware = require("./middleware/usersArr");
+const usersArr = require("./variables/ausersArr");
+const app = express();
 const {
   allowInsecurePrototypeAccess,
 } = require("@handlebars/allow-prototype-access");
-const app = express();
+const server = require("http").createServer(app); //!!!!!!!!!!!!
+var io = require("socket.io")(server); //!!!!!!!!!!!!
 const hbs = exphbs.create({
   defaultLayout: "main",
   extname: "hbs", //чтобы каждый раз не писать handlebars
@@ -45,10 +47,26 @@ app.use(
 app.use(csrf());
 app.use(flash());
 app.use(varMiddleware);
-
+app.use(usersMiddleware);
 app.use("/", homeRoutes);
 app.use("/users", usersRoutes);
 app.use("/auth", authRoutes);
+
+const connections = [];
+io.sockets.on("connection", (socket) => {
+  console.log("Seccessful connection");
+  connections.push(socket);
+
+  socket.on("disconnect", (data) => {
+    connections.splice(connections.indexOf(socket), 1);
+    console.log("Disconnect");
+  });
+  socket.on("invite user", (data) => {
+    io.sockets.emit("send an invitation", {
+      text: `it is an invitation for ${data}`,
+    });
+  });
+});
 
 async function start() {
   try {
@@ -59,7 +77,7 @@ async function start() {
       useFindAndModify: false,
     });
 
-    app.listen(PORT, () => {
+    server.listen(PORT, () => {
       console.log(`Server is running on port ${PORT}`);
     });
   } catch (e) {

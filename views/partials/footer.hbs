@@ -1,2 +1,28 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 <script src="/app.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="/socket.io/socket.io.js"></script>
+{{#if isAuth}}
+<script>
+    $(function() {
+        const socket = io.connect();
+        const inviteBtn = $('.inviteBtn');
+        const usersBox = $('.usersBox');
+        
+    socket.on("connect", () => {
+        console.log("clients connection:");
+        console.log(socket.connected); // true
+    });
+    socket.on('send an invitation', (data) => {
+        usersBox.append(`<p> ${data.text} </p>`);
+    })
+
+    inviteBtn.click(() => {
+        socket.emit('invite user', 'Appolinaryi');
+        console.log('user was invited');
+        inviteBtn.textContent = 'user was invited';
+    })
+
+    });
+</script>
+{{/if}}

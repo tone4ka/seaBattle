@@ -1,11 +1,15 @@
-const {Router} = require('express');
+const { Router } = require("express");
 const router = Router();
 
-router.get('/', (req, res) => {
-    res.render('users', {
-      title: 'Users',
-      isUsers: true
-    });
-})
+router.get("/", (req, res) => {
+  const user = req.currentUserName;
+  console.log(user);
+
+  res.render("users", {
+    currentUserName: req.currentUserName,
+    title: "Users",
+    isUsers: true,
+  });
+});
 
 module.exports = router;
