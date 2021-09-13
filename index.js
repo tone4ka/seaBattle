@@ -14,19 +14,18 @@ const authRoutes = require("./routes/auth");
 const keys = require("./keys"); //сюда вынесли переменные
 const varMiddleware = require("./middleware/variables");
 const usersMiddleware = require("./middleware/usersArr");
-const usersArr = require("./variables/ausersArr");
 const app = express();
-let io = require("socket.io"); //!!!!!!!!!!!!
+const runSocketIo = require('./websocket/runSocketIo')
 
 const {
   allowInsecurePrototypeAccess,
 } = require("@handlebars/allow-prototype-access");
-// const server = require("http").createServer(app); //!!!!!!!!!!!!
 const hbs = exphbs.create({
   defaultLayout: "main",
   extname: "hbs", //чтобы каждый раз не писать handlebars
   handlebars: allowInsecurePrototypeAccess(Handlebars), //это чтобы отключить проверку для отображения картинок
 });
+
 app.engine("hbs", hbs.engine); //регистрируем движок
 app.set("view engine", "hbs"); //начинаем использовать движок(регистрируем)
 app.set("views", "views"); //конфигурируем переменную, где будут храниться наши шаблоны(папка views)
@@ -52,8 +51,6 @@ app.use("/", homeRoutes);
 app.use("/users", usersRoutes);
 app.use("/auth", authRoutes);
 
-const connections = [];
-
 async function start() {
   try {
     const url = keys.MONGODB_URI;
@@ -66,21 +63,8 @@ async function start() {
     const server = app.listen(PORT, () => {
       console.log(`Server is running on port ${PORT}`);
     });
-    io = io(server);
-    io.sockets.on("connection", (socket) => {
-      console.log("Seccessful connection");
-      connections.push(socket);
+    runSocketIo(server);
 
-      socket.on("disconnect", (data) => {
-        connections.splice(connections.indexOf(socket), 1);
-        console.log("Disconnect");
-      });
-      socket.on("invite user", (data) => {
-        io.sockets.emit("send an invitation", {
-          text: `it is an invitation for ${data}`,
-        });
-      });
-    });
   } catch (e) {
     console.log(e);
   }

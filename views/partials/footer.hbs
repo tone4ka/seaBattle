@@ -8,20 +8,47 @@
         const socket = io.connect();
         const inviteBtn = $('.inviteBtn');
         const usersBox = $('.usersBox');
+        let currentUserName = $('.currentUserName');
+        currentUserName = currentUserName.text().split(' ')[2];
+        let usersList = [];
         
-    socket.on("connect", () => {
-        console.log("clients connection:");
-        console.log(socket.connected); // true
-    });
-    socket.on('send an invitation', (data) => {
-        usersBox.append(`<p> ${data.text} </p>`);
-    })
+        socket.on("connect", () => {
+            console.log("clients connection:");
+            console.log(socket.connected); // true
+            socket.emit('new user', {name: currentUserName});
+        });
+        socket.on('update', (usersArr) => {
+            usersList = [...usersArr];
+            console.log('apduted clients with clients arr:');
+            console.log(usersList);
+            const myIndex = usersList.indexOf(currentUserName);
+            usersList.splice(myIndex, 1);
+            usersBox.empty();
+            if(!usersList.length){
+                    usersBox.append(`<p> The sea is calm... The enemy is absent. </p>`);
+            } else {
+                usersList.forEach((userName) => {
+                    usersBox.append(`
+                    <div class="userBox ${userName}">
+                    <p> ${userName} </p>
+                    <button class="btn btn-blue inviteBtn ${userName}">Invite to the game</button>
+                    </div>
+                    `);
+                });
+            }
 
-    inviteBtn.click(() => {
-        socket.emit('invite user', 'Appolinaryi');
-        console.log('user was invited');
-        inviteBtn.textContent = 'user was invited';
-    })
+            
+            
+        })
+
+        inviteBtn.click(() => {
+            socket.emit('invite user', {name:'Appolinary'});
+            console.log('user was invited');
+            inviteBtn.textContent = 'user was invited';
+        });
+        socket.on('invitation created', (data) => {
+            usersBox.append(`<p> ${data.text} </p>`);
+        })
 
     });
 </script>
