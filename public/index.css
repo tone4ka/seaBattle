@@ -18,6 +18,15 @@ padding-top: 1rem;
 .btn.btn-blue {
     background-color: rgb(2, 95, 156);
 }
+.inaccessibleInviteBtn {
+    background-color: rgba(94, 120, 138, 0.767);
+}
+.invitationUnswerBtn {
+    background-color: orange;
+}
+.acceptSurrenderBtn{
+    background-color: orange;
+}
 .currentUserName {
     display: block;
     font-style: italic;
@@ -31,4 +40,7 @@ padding-top: 1rem;
     margin: 7px;
     border-radius: 3px;
     box-shadow: 0 0 3px #27231e75;
+}
+.gameBox {
+    background: linear-gradient(to top left, rgba(1, 104, 172, 0.247), #ffffff, rgba(1, 104, 172, 0.247));
 }

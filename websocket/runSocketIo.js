@@ -7,40 +7,61 @@ function runSocketIo(server) {
   io = io(server);
   io.sockets.on("connection", (socket) => {
     console.log("Seccessful connection");
-    console.log('connected users:');
+    console.log("connected users:");
     console.log(usersArr);
     connections.push(socket);
 
     socket.on("new user", (data) => {
       socket.user = data.name;
       usersArr.push(data.name);
-      console.log('new user:');
+      console.log("new user:");
       console.log(data.name);
-      console.log('connected users:');
+      console.log("connected users:");
       console.log(usersArr);
-      updateClients();
+      updateClients(null, data.name);
+    });
+
+    socket.on("userLeftTheGame", (data) => {
+      updateClients(data.name);
+      updateClients(null, data.name);
     });
 
     socket.on("disconnect", () => {
-      // connections.splice(connections.indexOf(socket), 1);
       const userIndex = usersArr.indexOf(socket.user);
       usersArr.splice(userIndex, 1);
       console.log("Disconnected user:");
       console.log(socket.user);
-      console.log('connected users:');
+      console.log("connected users:");
       console.log(usersArr);
-      updateClients();
+      updateClients(socket.user, null);
     });
 
-    function updateClients() {
-      console.log('update Clients with arr:');
+    function updateClients(disconnectedUser, connectedUser) {
+      console.log("update Clients with arr:");
       console.log(usersArr);
-      io.sockets.emit("update", usersArr);
+      io.sockets.emit("update", {
+        usersArr: usersArr,
+        disconnectedUser: disconnectedUser,
+        connectedUser: connectedUser,
+      });
     }
 
     socket.on("invite user", (data) => {
       io.sockets.emit("invitation created", {
-        text: `it is an invitation for ${data.name}`,
+        text: `it is an invitation for ${data.invitedUserName} from ${data.inviterName}`,
+        invitedUserName: data.invitedUserName,
+        inviterName: data.inviterName,
+      });
+    });
+    socket.on("start game", (data) => {
+      io.sockets.emit("the game has begun", {
+        inviterName: data.inviterName,
+        respondingUserName: data.respondingUserName,
+      });
+    });
+    socket.on("dataToEnemy", (data) => {
+      io.sockets.emit(`${data.enemyName}`, {
+        field: [...data.field],
       });
     });
   });
