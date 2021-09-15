@@ -1,9 +1,11 @@
-const { Router } = require("express");
-const bcrypt = require("bcryptjs"); //для шифрования ключей
-const crypto = require("crypto"); // для генерации пароля(при восстановлении пароля)
-const User = require("../models/user");
+import express from "express";
+const Router = express;
+import bcrypt from "bcryptjs"; //для шифрования ключей
+import crypto from "crypto"; // для генерации пароля(при восстановлении пароля)
+import User from "../models/user.js";
 const router = Router();
-const { sendMail, resetPassSendMail } = require("../mailconfig/sendmail");
+import mailconfig from "../mailconfig/sendmail.js";
+const { sendMail, resetPassSendMail } = mailconfig;
 
 router.get("/login", async (req, res) => {
   res.render("auth/login", {
@@ -157,4 +159,4 @@ router.post("/password", async (req, res) => {
   }
 });
 
-module.exports = router;
+export default router;

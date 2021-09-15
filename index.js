@@ -1,37 +1,38 @@
-const express = require("express");
-const Handlebars = require("handlebars");
-const exphbs = require("express-handlebars");
-const path = require("path");
-const csrf = require("csurf");
-const flash = require("connect-flash"); //для передачи данных через сессию
-const mongoose = require("mongoose");
+import express from "express";
+import Handlebars from "handlebars";
+import exphbs from "express-handlebars";
+import path from "path";
+import csrf from "csurf";
+import flash from "connect-flash"; //для передачи данных через сессию
+import mongoose from "mongoose";
 const PORT = process.env.PORT || 3000;
-const session = require("express-session");
-const MongoStore = require("connect-mongodb-session")(session);
-const usersRoutes = require("./routes/users");
-const homeRoutes = require("./routes/home");
-const authRoutes = require("./routes/auth");
-const keys = require("./keys"); //сюда вынесли переменные
-const varMiddleware = require("./middleware/variables");
-const usersMiddleware = require("./middleware/usersArr");
+import session from "express-session";
+import MongoStore from "connect-mongodb-session";
+let MongoStoreSession = MongoStore(session);
+import usersRoutes from "./routes/users.js";
+import homeRoutes from "./routes/home.js";
+import authRoutes from "./routes/auth.js";
+import keys from "./keys/index.js"; //сюда вынесли переменные
+import varMiddleware from "./middleware/variables.js";
+import usersMiddleware from "./middleware/usersArr.js";
 const app = express();
-const runSocketIo = require('./websocket/runSocketIo')
+import runSocketIo from "./websocket/runSocketIo.js";
 
-const {
-  allowInsecurePrototypeAccess,
-} = require("@handlebars/allow-prototype-access");
+// const {
+//   allowInsecurePrototypeAccess,
+// } = require("@handlebars/allow-prototype-access");
 const hbs = exphbs.create({
   defaultLayout: "main",
   extname: "hbs", //чтобы каждый раз не писать handlebars
-  handlebars: allowInsecurePrototypeAccess(Handlebars), //это чтобы отключить проверку для отображения картинок
+  // handlebars: allowInsecurePrototypeAccess(Handlebars), //это чтобы отключить проверку для отображения картинок
 });
 
 app.engine("hbs", hbs.engine); //регистрируем движок
 app.set("view engine", "hbs"); //начинаем использовать движок(регистрируем)
 app.set("views", "views"); //конфигурируем переменную, где будут храниться наши шаблоны(папка views)
-app.use(express.static(path.join(__dirname, "public"))); //зарегистрировали папку паблик по умолчанию
+app.use(express.static(path.join(path.resolve(path.dirname('')), "public"))); //зарегистрировали папку паблик по умолчанию
 app.use(express.urlencoded({ extended: true }));
-const store = new MongoStore({
+const store = new MongoStoreSession({
   collection: "sessions",
   uri: keys.MONGODB_URI,
 });
@@ -64,7 +65,6 @@ async function start() {
       console.log(`Server is running on port ${PORT}`);
     });
     runSocketIo(server);
-
   } catch (e) {
     console.log(e);
   }

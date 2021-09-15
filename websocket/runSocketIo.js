@@ -1,10 +1,11 @@
-let io = require("socket.io");
-const usersArr = require("../variables/ausersArr");
+import * as socket_io from "socket.io";
+let io = socket_io;
+import usersArr from "../variables/ausersArr.js";
 
 const connections = [];
 
 function runSocketIo(server) {
-  io = io(server);
+  io = new io.Server(server);
   io.sockets.on("connection", (socket) => {
     console.log("Seccessful connection");
     console.log("connected users:");
@@ -67,4 +68,4 @@ function runSocketIo(server) {
   });
 }
 
-module.exports = runSocketIo;
+export default runSocketIo;
