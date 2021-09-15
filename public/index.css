@@ -27,7 +27,11 @@ padding-top: 1rem;
 .acceptSurrenderBtn{
     background-color: orange;
 }
+.container {
+    height: 100vh;
+}
 .currentUserName {
+    margin: 0;
     display: block;
     font-style: italic;
     padding-left: 20px;
@@ -42,5 +46,63 @@ padding-top: 1rem;
     box-shadow: 0 0 3px #27231e75;
 }
 .gameBox {
-    background: linear-gradient(to top left, rgba(1, 104, 172, 0.247), #ffffff, rgba(1, 104, 172, 0.247));
+    padding-top: 20px;
+    /* background: linear-gradient(to top left, rgba(1, 104, 172, 0.247), #ffffff, rgba(1, 104, 172, 0.247)); */
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    /* justify-content: space-around; */
+}
+.fieldsBox {
+    display: flex;
+    justify-content: space-around;
+}
+.shipsBox {
+    display: flex;
+    justify-content: space-around;
+}
+.enemyFieldBox {
+    /* background-color: rgb(255, 255, 255); */
+    width: 500px;
+    height: 400px;
+    display: flex;
+    flex-direction: column;
+}
+.userFieldBox {
+    /* background-color: rgb(255, 255, 255); */
+    width: 500px;
+    height: 400px;
+    display: flex;
+    flex-direction: column;
+}
+.userFieldRow {
+    display: flex;
+    justify-content: center;
+}
+.enemyFieldRow {
+    display: flex;
+    justify-content: center;
+}
+.cell {
+    width: 30px;
+    height: 30px;
+    display: flex;
+    justify-content: center;
+}
+.gameFieldCell {
+     border: 1px solid rgb(2, 95, 156);
+}
+.shipsBox {
+    display: flex;
+    background-color: rgb(238, 255, 80)
+}
+.ship {
+    display: flex;
+    background-color: rgb(255, 80, 168)
+}
+.shipCell {
+    background-color: coral;
+    border: 1px solid rgb(2, 95, 156);
+    width: 30px;
+    height: 30px;
 }

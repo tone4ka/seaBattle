@@ -79,7 +79,7 @@
                     usersBox.append('<p>loading....................</p>');
                     socket.emit("start game", {respondingUserName: currentUserName, inviterName: enemyName});
                 };
-                 if(event.target.classList.contains('acceptSurrenderBtn')){
+                if(event.target.classList.contains('acceptSurrenderBtn')){
                      userInGame = false;
                      socket.emit('userLeftTheGame', {name: currentUserName});
                      createUsersList();
@@ -104,10 +104,11 @@
                 usersBox.empty();
                 usersBox.append(`
                 <div class="gameBox">
-                    <p>Start game!!!</p>
+                <button class="btn btn-blue startGameBtn ${currentEnemyName}">Start game</button>
                 </div>
                 `);
                 const gameBox = $('.gameBox');
+                socket.emit(`dataToEnemy`, {enemyName: currentEnemyName, field: [[0, 0], [1, 1], [2, 2], [3, 3]]});
                 gameBox.click(() => {
                     currentEnemyName = data.inviterName == currentUserName ? data.respondingUserName : data.inviterName;
                     socket.emit(`dataToEnemy`, {enemyName: currentEnemyName, field: [[0, 0], [1, 1], [2, 2], [3, 3]]});
@@ -130,10 +131,10 @@
         socket.on(`${currentUserName}`, (data) => {
             const currentGameBox = $('.gameBox');
             const field = `||${data.field.map((string) => string.join('-')).join('||')}||`;
-            currentGameBox.append(`
+            {{!-- currentGameBox.append(`
                 <p>Your opponent clicked on the field and sent the state of the field: ${field}</p>
-            `);
-
+            `); --}}
+            console.log(`Your opponent clicked on the field and sent the state of the field: ${field}`)
         });
     });
 </script>
