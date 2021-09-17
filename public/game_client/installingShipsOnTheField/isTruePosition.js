@@ -5,13 +5,16 @@ export default function isTruePosition(
   dropFieldCell,
   userFieldState
 ) {
+  if(!shipDragStartCellData) return false;
+  if(!dropFieldCell.classList.contains('cell')) return false;
+
   const fieldCellsForShip = [];
   const startdragShipCellNumber = +shipDragStartCellData.numberOfCell;
   const deckCount = +shipDragStartCellData.deckCount;
   const row = +dropFieldCell.classList[1];
   const column = +dropFieldCell.classList[2];
   console.log(`deckCount ${deckCount}`);
-  // if(!dropFieldCell) return false;
+
 
   if (
     dropFieldCell.shipCell ||
