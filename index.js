@@ -18,6 +18,9 @@ import usersMiddleware from "./middleware/usersArr.js";
 const app = express();
 import runSocketIo from "./websocket/runSocketIo.js";
 
+// const {
+//   allowInsecurePrototypeAccess,
+// } = require("@handlebars/allow-prototype-access");
 const hbs = exphbs.create({
   defaultLayout: "main",
   extname: "hbs", //чтобы каждый раз не писать handlebars
