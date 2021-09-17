@@ -1,7 +1,7 @@
 import shipsTemplate from './templates/shipsTemplate.js';
 import createFields from "./createFields.js";
 import fieldsBoxTemplate from "./templates/fieldsBoxTemplate.js";
-import dragAndDropShipsHandler from './dragAndDropShipsHandler.js';
+import setDragAndDropShipsListeners from './setDragAndDropShipsListeners.js';
 
 const container = document.querySelector(".container");
 let userShipsInstalled = false;
@@ -19,7 +19,7 @@ function startgame() {
     "beforeend",
      shipsTemplate
   );
-  dragAndDropShipsHandler();
+  setDragAndDropShipsListeners();
 };
 
 

@@ -1,7 +1,7 @@
 import { userFieldState } from "./fieldsStates.js";
 import installShipOnTheField from "./installingShipsOnTheField/installShipOnTheField.js";
 
-export default function dragAndDropShipsHandler() {
+export default function setDragAndDropShipsListeners() {
   const container = document.querySelector(".container");
   let shipCells;
   let cursorStartCoordinates = {};
@@ -12,7 +12,6 @@ export default function dragAndDropShipsHandler() {
     const draggedShip = event.target;
     shipCells = draggedShip.childNodes;
   });
-
   container.addEventListener("dragend", (event) => {
     cursorEndCoordinates.left = event.clientX;
     cursorEndCoordinates.top = event.clientY;

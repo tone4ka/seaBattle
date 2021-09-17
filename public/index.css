@@ -106,3 +106,7 @@ padding-top: 1rem;
     width: 30px;
     height: 30px;
 }
+.notInstalledShipCell:first-child:hover {
+    cursor: pointer;
+    background-color: rgb(214, 67, 14);
+}

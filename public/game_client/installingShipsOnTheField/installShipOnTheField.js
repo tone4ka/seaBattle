@@ -1,5 +1,6 @@
 import { userFieldState, enemyFieldState } from "../fieldsStates.js";
-import isTruePosition from "./isTruePosition.js";
+import getFieldCellsForShip from "./getFieldCellsForShip.js";
+import getShipDragStartCellData from './getShipDragStartCellData.js';
 
 export default function installShipOnTheField(
   cursorStartCoordinates,
@@ -7,28 +8,13 @@ export default function installShipOnTheField(
   shipCells,
   dropFieldCell
 ) {
-  const shipDragStartCellData = Array.from(shipCells)
-    .filter((item) => item.classList)
-    .map((cell) => {
-      return {
-        cell: cell,
-        left: cell.getBoundingClientRect().left,
-        top: cell.getBoundingClientRect().top,
-        isVertical: cell.parentNode.style.flexDirection == "column",
-        numberOfCell: cell.classList[2],
-        deckCount: cell.parentNode.classList[1][0],
-      };
-    })
-    .find((cell) => {
-      return (
-        cell.left < cursorStartCoordinates.left &&
-        cell.left + 30 >
-          cursorStartCoordinates.left &&
-        cell.top < cursorStartCoordinates.top &&
-        cell.top + 30 >
-          cursorStartCoordinates.top
-      );
+  const shipDragStartCellData = getShipDragStartCellData (shipCells, cursorStartCoordinates);
+
+  const fieldCellsForShip = getFieldCellsForShip (shipDragStartCellData, dropFieldCell, userFieldState);
+  if(fieldCellsForShip) {
+    fieldCellsForShip.forEach((fieldCell) => {
+      fieldCell.cellNode.style.backgroundColor = 'blue';
+      //добавить свойство fieldCell.shipCell, в котором лежит нод клетки кораблика!!!Ы
     });
-  const res = isTruePosition (shipDragStartCellData, dropFieldCell, userFieldState);
-  console.log(res);
+  };
 }
