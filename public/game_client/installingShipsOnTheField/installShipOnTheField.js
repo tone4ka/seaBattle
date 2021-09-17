@@ -29,6 +29,6 @@ export default function installShipOnTheField(
           cursorStartCoordinates.top
       );
     });
-  isTruePosition (shipDragStartCellData, dropFieldCell, userFieldState);
-  console.log( isTruePosition (shipDragStartCellData, dropFieldCell, userFieldState));
+  const res = isTruePosition (shipDragStartCellData, dropFieldCell, userFieldState);
+  console.log(res);
 }

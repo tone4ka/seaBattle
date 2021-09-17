@@ -38,8 +38,7 @@ export default function isTruePosition(
   if (shipDragStartCellData.isVertical) {
     if (startdragShipCellNumber > 1) {
       for (let i = startdragShipCellNumber - 1; i >= 1; i--) {
-        console.log(`i ${i}`);
-        findNeighbors(row - i, column, neighbors, userFieldState);
+        findNeighbors(row - (startdragShipCellNumber - i), column, neighbors, userFieldState);
       }
     }
     if (
@@ -50,7 +49,7 @@ export default function isTruePosition(
         i <= deckCount;
         i++
       ) {
-        findNeighbors(row + i, column, neighbors, userFieldState);
+        findNeighbors(row + (i - startdragShipCellNumber), column, neighbors, userFieldState);
       }
     }
   } else {
@@ -59,20 +58,23 @@ export default function isTruePosition(
         findNeighbors(row, column - (startdragShipCellNumber - i), neighbors, userFieldState);
       }
     }
-    if (
-      startdragShipCellNumber < deckCount
-    ) {
+    if (startdragShipCellNumber < deckCount) {
       for (
         let i = startdragShipCellNumber + 1;
         i <= deckCount;
         i++
       ) {
-        findNeighbors(row, column + i, neighbors, userFieldState);
+        findNeighbors(row, column + (i - startdragShipCellNumber), neighbors, userFieldState);
       }
     }
   }
   console.log('neighbors:');
-  console.log(neighbors);
+  
+  neighbors.forEach((neighbor) => {
+    console.log(neighbor);
+    neighbor.cellNode.style.backgroundColor = 'red'
+    console.log(neighbor);
+  })
   //   console.log(neighbors[0].shipCell);
   //   const isNeighborsShips = neighbors.some((neighbor) => neighbor.shipCell)
   //   if (isNeighborsShips) return false;
