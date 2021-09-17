@@ -94,17 +94,17 @@ padding-top: 1rem;
 }
 .shipsBox {
     display: flex;
-    background-color: rgb(238, 255, 80)
 }
 .ship {
     display: flex;
-    background-color: rgb(255, 80, 168)
 }
 .shipCell {
     background-color: coral;
-    border: 1px solid rgb(2, 95, 156);
     width: 30px;
     height: 30px;
+}
+.notInstalledShipCell {
+    border: 1px solid rgb(2, 95, 156);
 }
 .notInstalledShipCell:first-child:hover {
     cursor: pointer;

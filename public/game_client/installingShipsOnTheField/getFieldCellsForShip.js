@@ -57,9 +57,5 @@ export default function getFieldCellsForShip(
   const isNeighborsShips = neighbors.some((neighbor) => neighbor.shipCell)
   if (isNeighborsShips) return false;
 
-  neighbors.forEach((neighbor) => {
-    neighbor.cellNode.style.backgroundColor = 'red';
-  })
-
   return fieldCellsForShip;
 }

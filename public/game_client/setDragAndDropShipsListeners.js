@@ -6,11 +6,23 @@ export default function setDragAndDropShipsListeners() {
   let shipCells;
   let cursorStartCoordinates = {};
   let cursorEndCoordinates = {};
+  let draggedShip;
   container.addEventListener("dragstart", (event) => {
     cursorStartCoordinates.left = event.clientX;
     cursorStartCoordinates.top = event.clientY;
-    const draggedShip = event.target;
-    shipCells = draggedShip.childNodes;
+    draggedShip = event.target;
+    shipCells = Array.from(draggedShip.childNodes)
+    .filter((item) => item.classList)
+    .map((cell) => {
+      return {
+        cell: cell,
+        left: cell.getBoundingClientRect().left,
+        top: cell.getBoundingClientRect().top,
+        isVertical: cell.parentNode.style.flexDirection == "column",
+        numberOfCell: cell.classList[2],
+        deckCount: cell.parentNode.classList[1][0],
+      };
+    })
   });
   container.addEventListener("dragend", (event) => {
     cursorEndCoordinates.left = event.clientX;
@@ -22,9 +34,8 @@ export default function setDragAndDropShipsListeners() {
         cursorStartCoordinates,
         cursorEndCoordinates,
         shipCells,
-        dropFieldCell
+        dropFieldCell,
+        draggedShip
         );
   });
-}
-
-// return window.getComputedStyle(cell).x.slice(0, -2);
+};

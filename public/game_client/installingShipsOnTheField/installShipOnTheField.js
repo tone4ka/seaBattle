@@ -6,15 +6,19 @@ export default function installShipOnTheField(
   cursorStartCoordinates,
   cursorEndCoordinates,
   shipCells,
-  dropFieldCell
+  dropFieldCell,
+  draggedShip
 ) {
   const shipDragStartCellData = getShipDragStartCellData (shipCells, cursorStartCoordinates);
 
-  const fieldCellsForShip = getFieldCellsForShip (shipDragStartCellData, dropFieldCell, userFieldState);
-  if(fieldCellsForShip) {
-    fieldCellsForShip.forEach((fieldCell) => {
-      fieldCell.cellNode.style.backgroundColor = 'blue';
-      //добавить свойство fieldCell.shipCell, в котором лежит нод клетки кораблика!!!Ы
-    });
+  const fieldCellsDataForShip = getFieldCellsForShip (shipDragStartCellData, dropFieldCell, userFieldState);
+  if(fieldCellsDataForShip) {
+    for(let i = 0; i<fieldCellsDataForShip.length; i += 1) {
+      fieldCellsDataForShip[i].shipCell = shipCells[i].cell;
+      fieldCellsDataForShip[i].cellNode.style.backgroundColor = 'coral';
+      fieldCellsDataForShip[i].cellNode.appendChild(shipCells[i].cell);
+      shipCells[i].cell.classList.remove('notInstalledShipCell')
+    }
+    draggedShip.innerHTML = '';
   };
 }
