@@ -5,6 +5,7 @@ export default function isTruePosition(
   dropFieldCell,
   userFieldState
 ) {
+  const fieldCellsForShip = [];
   const startdragShipCellNumber = +shipDragStartCellData.numberOfCell;
   const deckCount = +shipDragStartCellData.deckCount;
   const row = +dropFieldCell.classList[1];
@@ -33,12 +34,12 @@ export default function isTruePosition(
   };
 
   const neighbors = [];
-  findNeighbors(row, column, neighbors, userFieldState);
+  findNeighbors(row, column, neighbors, userFieldState, fieldCellsForShip);
 
   if (shipDragStartCellData.isVertical) {
     if (startdragShipCellNumber > 1) {
       for (let i = startdragShipCellNumber - 1; i >= 1; i--) {
-        findNeighbors(row - (startdragShipCellNumber - i), column, neighbors, userFieldState);
+        findNeighbors(row - (startdragShipCellNumber - i), column, neighbors, userFieldState, fieldCellsForShip);
       }
     }
     if (
@@ -49,13 +50,13 @@ export default function isTruePosition(
         i <= deckCount;
         i++
       ) {
-        findNeighbors(row + (i - startdragShipCellNumber), column, neighbors, userFieldState);
+        findNeighbors(row + (i - startdragShipCellNumber), column, neighbors, userFieldState, fieldCellsForShip);
       }
     }
   } else {
     if (startdragShipCellNumber > 1) {      
       for (let i = startdragShipCellNumber - 1; i >= 1; i--) {
-        findNeighbors(row, column - (startdragShipCellNumber - i), neighbors, userFieldState);
+        findNeighbors(row, column - (startdragShipCellNumber - i), neighbors, userFieldState, fieldCellsForShip);
       }
     }
     if (startdragShipCellNumber < deckCount) {
@@ -64,16 +65,18 @@ export default function isTruePosition(
         i <= deckCount;
         i++
       ) {
-        findNeighbors(row, column + (i - startdragShipCellNumber), neighbors, userFieldState);
+        findNeighbors(row, column + (i - startdragShipCellNumber), neighbors, userFieldState, fieldCellsForShip);
       }
     }
   }
   console.log('neighbors:');
   
   neighbors.forEach((neighbor) => {
-    console.log(neighbor);
-    neighbor.cellNode.style.backgroundColor = 'red'
-    console.log(neighbor);
+    neighbor.cellNode.style.backgroundColor = 'red';
+  })
+  fieldCellsForShip.forEach((fieldCell) => {
+    fieldCell.cellNode.style.backgroundColor = 'blue';
+    console.log(fieldCell);
   })
   //   console.log(neighbors[0].shipCell);
   //   const isNeighborsShips = neighbors.some((neighbor) => neighbor.shipCell)
