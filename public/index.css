@@ -16,6 +16,7 @@ padding-top: 1rem;
     color: red;
 }
 .btn.btn-blue {
+    max-width: 300px;
     background-color: rgb(2, 95, 156);
 }
 .inaccessibleInviteBtn {
@@ -38,6 +39,9 @@ padding-top: 1rem;
     color: rgb(255, 255, 255);
     background: linear-gradient(to right, rgb(2, 95, 156), #ffffff, #ffffff, #ffffff);
 }
+.gamePageTitle {
+    /* height: 50px; */
+}
 .userBox {
     background: linear-gradient(to top left, rgba(1, 104, 172, 0.404), #ffffff, rgba(1, 104, 172, 0.404));
     padding: 2px 0 15px 20px;
@@ -46,6 +50,7 @@ padding-top: 1rem;
     box-shadow: 0 0 3px #27231e75;
 }
 .gameBox {
+    margin-top: 0;
     padding-top: 20px;
     /* background: linear-gradient(to top left, rgba(1, 104, 172, 0.247), #ffffff, rgba(1, 104, 172, 0.247)); */
     height: 100vh;
@@ -74,6 +79,9 @@ padding-top: 1rem;
     height: 400px;
     display: flex;
     flex-direction: column;
+}
+.shipPlacingStatus {
+    color: rgba(255, 0, 0, 0.925);
 }
 .userFieldRow {
     display: flex;

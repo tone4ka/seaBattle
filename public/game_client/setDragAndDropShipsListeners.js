@@ -1,12 +1,13 @@
 import { userFieldState } from "./fieldsStates.js";
 import installShipOnTheField from "./installingShipsOnTheField/installShipOnTheField.js";
+import sendReadyForGameStatusToEnemy from "./interactionWithWebsocket/sendReadyForGameStatusToEnemy.js";
 
 export default function setDragAndDropShipsListeners() {
   const container = document.querySelector(".container");
   let shipCells;
   let cursorStartCoordinates = {};
-  let cursorEndCoordinates = {};
   let draggedShip;
+  let countOfInstalledShips = 0;
   container.addEventListener("dragstart", (event) => {
     cursorStartCoordinates.left = event.clientX;
     cursorStartCoordinates.top = event.clientY;
@@ -24,18 +25,15 @@ export default function setDragAndDropShipsListeners() {
       };
     })
   });
-  container.addEventListener("dragend", (event) => {
-    cursorEndCoordinates.left = event.clientX;
-    cursorEndCoordinates.top = event.clientY;
-  });
   container.addEventListener("drop", (event) => {
     const dropFieldCell = event.target;
-    installShipOnTheField(
+    const wasTheShipInstalled = installShipOnTheField(
         cursorStartCoordinates,
-        cursorEndCoordinates,
         shipCells,
         dropFieldCell,
         draggedShip
         );
+    if(wasTheShipInstalled) countOfInstalledShips += 1;
+    if (countOfInstalledShips === 10) sendReadyForGameStatusToEnemy();
   });
 };

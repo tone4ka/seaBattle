@@ -4,7 +4,6 @@ import getShipDragStartCellData from './getShipDragStartCellData.js';
 
 export default function installShipOnTheField(
   cursorStartCoordinates,
-  cursorEndCoordinates,
   shipCells,
   dropFieldCell,
   draggedShip
@@ -20,5 +19,7 @@ export default function installShipOnTheField(
       shipCells[i].cell.classList.remove('notInstalledShipCell')
     }
     draggedShip.innerHTML = '';
+    return true;
   };
+  return false;
 }

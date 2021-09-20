@@ -24,7 +24,7 @@
                         usersBox.append(`
                         <div class="userBox ${userName}Box">
                         <p> ${userName} </p>
-                        <button class="btn btn-blue inviteBtn ${userName}">Invite to the game</button>
+                        <button class="btn btnSocket btn-blue inviteBtn ${userName}">Invite to the game</button>
                         </div>
                         `);
                     });
@@ -47,7 +47,7 @@
                     usersBox.append(`
                         <div class="enemyCapitulated">
                             <h5>Your opponent has surrendered!<h5>
-                            <button class="btn acceptSurrenderBtn">Accept surrender</button>
+                            <button class="btn btnSocket acceptSurrenderBtn">Accept surrender</button>
                         </div>
                     `);
                 } else {
@@ -57,20 +57,20 @@
                 usersBox.append(`
                     <div class="userBox ${data.connectedUser}Box">
                     <p> ${data.connectedUser} </p>
-                    <button class="btn btn-blue inviteBtn ${data.connectedUser}">Invite to the game</button>
+                    <button class="btn btnSocket btn-blue inviteBtn ${data.connectedUser}">Invite to the game</button>
                     </div>
                     `);
             } else { console.log('............clients socket updation error................') }
         });
         usersBox.click((event) => {
-            if(event.target.classList.contains('btn')){
+            if(event.target.classList.contains('btnSocket')){
                 const currentBtn = event.target;
                 const enemyName = Array.from(currentBtn.classList).slice(-1)[0];
                 const enemyBox = $(`.${enemyName}Box`);
                 if(event.target.classList.contains('inviteBtn')){
                     currentBtn.remove();
                     enemyBox.append(`
-                            <button class="btn inaccessibleInviteBtn ${enemyName}">User was invited</button>
+                            <button class="btn btnSocket inaccessibleInviteBtn ${enemyName}">User was invited</button>
                             `);
                     socket.emit("invite user", {invitedUserName: enemyName, inviterName: currentUserName});
                 };
@@ -93,26 +93,27 @@
                 inviterBox.empty();
                 inviterBox.append(`
                         <p> ${data.inviterName} </p>
-                        <button class="btn invitationUnswerBtn ${data.inviterName}">Take the fight?</button>
+                        <button class="btn btnSocket invitationUnswerBtn ${data.inviterName}">Take the fight?</button>
                         `);
                
             }
         });
         socket.on('the game has begun', (data) => {
             if(data.inviterName == currentUserName || data.respondingUserName == currentUserName){
+                currentEnemyName = data.inviterName == currentUserName ? data.respondingUserName : data.inviterName;
                 userInGame = true;
                 usersBox.empty();
                 usersBox.append(`
                 <div class="gameBox">
-                <button class="btn btn-blue startGameBtn ${currentEnemyName}">Start game</button>
+                <button class="btn btnSocket btn-blue startGameBtn ${currentEnemyName}">Start game</button>
                 </div>
                 `);
                 const gameBox = $('.gameBox');
-                socket.emit(`dataToEnemy`, {enemyName: currentEnemyName, field: [[0, 0], [1, 1], [2, 2], [3, 3]]});
+                {{!-- socket.emit(`dataToEnemy`, {enemyName: currentEnemyName, field: [[0, 0], [1, 1], [2, 2], [3, 3]]});
                 gameBox.click(() => {
                     currentEnemyName = data.inviterName == currentUserName ? data.respondingUserName : data.inviterName;
                     socket.emit(`dataToEnemy`, {enemyName: currentEnemyName, field: [[0, 0], [1, 1], [2, 2], [3, 3]]});
-                });
+                }); --}}
             } else {
                 const inviterBtn  = $(`.${data.inviterName}`);
                 const responderBtn =  $(`.${data.respondingUserName}`);
@@ -121,21 +122,22 @@
                 const inviterBox  = $(`.${data.inviterName}Box`);
                 const responderBox =  $(`.${data.respondingUserName}Box`);
                 inviterBox.append(`
-                        <button class="btn inaccessibleInviteBtn ${data.inviterName}">User in battle</button>
+                        <button class="btn btnSocket inaccessibleInviteBtn ${data.inviterName}">User in battle</button>
                         `);
                 responderBox.append(`
-                        <button class="btn inaccessibleInviteBtn ${data.respondingUserName}">User in battle</button>
+                        <button class="btn btnSocket inaccessibleInviteBtn ${data.respondingUserName}">User in battle</button>
                         `);
             }
         });
         socket.on(`${currentUserName}`, (data) => {
-            const currentGameBox = $('.gameBox');
-            const field = `||${data.field.map((string) => string.join('-')).join('||')}||`;
-            {{!-- currentGameBox.append(`
-                <p>Your opponent clicked on the field and sent the state of the field: ${field}</p>
-            `); --}}
-            console.log(`Your opponent clicked on the field and sent the state of the field: ${field}`)
+            console.log('data from enemy:')
+            console.log(data.field)
         });
+        $('.container').bind('sendReadyForGameStatusToEnemyEvent', (event) => {
+            console.log('hello from socket');
+             console.log(event.detail);
+             socket.emit(`dataToEnemy`, {enemyName: currentEnemyName, field: event.detail});
+        })
     });
 </script>
 <script type="module" src="/game_client/game.js"></script>
