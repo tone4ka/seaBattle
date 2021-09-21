@@ -109,11 +109,6 @@
                 </div>
                 `);
                 const gameBox = $('.gameBox');
-                {{!-- socket.emit(`dataToEnemy`, {enemyName: currentEnemyName, field: [[0, 0], [1, 1], [2, 2], [3, 3]]});
-                gameBox.click(() => {
-                    currentEnemyName = data.inviterName == currentUserName ? data.respondingUserName : data.inviterName;
-                    socket.emit(`dataToEnemy`, {enemyName: currentEnemyName, field: [[0, 0], [1, 1], [2, 2], [3, 3]]});
-                }); --}}
             } else {
                 const inviterBtn  = $(`.${data.inviterName}`);
                 const responderBtn =  $(`.${data.respondingUserName}`);
@@ -130,13 +125,20 @@
             }
         });
         socket.on(`${currentUserName}`, (data) => {
-            console.log('data from enemy:')
-            console.log(data.field)
+             const newDataFromEnemy = new Event('newDataFromEnemy');
+                 newDataFromEnemy.detail = {
+                        field: [...data.field],
+                        currentEvent: data.currentEvent
+                    };
+             const container = document.querySelector('.container');
+             container.dispatchEvent(newDataFromEnemy);
         });
-        $('.container').bind('sendReadyForGameStatusToEnemyEvent', (event) => {
-            console.log('hello from socket');
-             console.log(event.detail);
-             socket.emit(`dataToEnemy`, {enemyName: currentEnemyName, field: event.detail});
+        $('.container').bind('sendDataToEnemy', (event) => {
+             socket.emit(`dataToEnemy`, {
+                 enemyName: currentEnemyName,
+                 currentEvent:  event.detail.currentEvent,
+                 field: event.detail.field,
+                 });
         })
     });
 </script>

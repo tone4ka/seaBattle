@@ -80,7 +80,10 @@ padding-top: 1rem;
     display: flex;
     flex-direction: column;
 }
-.shipPlacingStatus {
+.userShipPlacingStatus {
+    color: rgba(255, 0, 0, 0.925);
+}
+.enemyShipPlacingStatus {
     color: rgba(255, 0, 0, 0.925);
 }
 .userFieldRow {

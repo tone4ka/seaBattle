@@ -1,6 +1,5 @@
-import { userFieldState } from "./fieldsStates.js";
 import installShipOnTheField from "./installingShipsOnTheField/installShipOnTheField.js";
-import sendReadyForGameStatusToEnemy from "./interactionWithWebsocket/sendReadyForGameStatusToEnemy.js";
+import sendDataToEnemy from "./interactionWithWebsocket/sendDataToEnemy.js";
 
 export default function setDragAndDropShipsListeners() {
   const container = document.querySelector(".container");
@@ -34,6 +33,10 @@ export default function setDragAndDropShipsListeners() {
         draggedShip
         );
     if(wasTheShipInstalled) countOfInstalledShips += 1;
-    if (countOfInstalledShips === 10) sendReadyForGameStatusToEnemy();
+    if (countOfInstalledShips === 10) {
+      const userSsipsInstallingStatus = document.querySelector('.userShipPlacingStatus');
+      userSsipsInstallingStatus.style.color = 'blue';
+      sendDataToEnemy('shipsWasInstalled');
+    };
   });
 };

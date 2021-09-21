@@ -63,6 +63,7 @@ function runSocketIo(server) {
     socket.on("dataToEnemy", (data) => {
       io.sockets.emit(`${data.enemyName}`, {
         field: [...data.field],
+        currentEvent: data.currentEvent
       });
     });
   });

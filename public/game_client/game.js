@@ -2,6 +2,7 @@ import shipsTemplate from './templates/shipsTemplate.js';
 import createFields from "./createFields.js";
 import fieldsBoxTemplate from "./templates/fieldsBoxTemplate.js";
 import setDragAndDropShipsListeners from './setDragAndDropShipsListeners.js';
+import getDataFromEnemyHandler from './interactionWithWebsocket/getDataFromEnemyHandler.js';
 
 const container = document.querySelector(".container");
 let userShipsInstalled = false;
@@ -34,4 +35,7 @@ container.addEventListener("click", (event) => {
       ? (ship.style.flexDirection = "row")
       : (ship.style.flexDirection = "column");
   }
+});
+container.addEventListener('newDataFromEnemy', (event) => {
+  getDataFromEnemyHandler(event.detail);
 });
