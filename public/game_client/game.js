@@ -3,6 +3,9 @@ import createFields from "./createFields.js";
 import fieldsBoxTemplate from "./templates/fieldsBoxTemplate.js";
 import setDragAndDropShipsListeners from './setDragAndDropShipsListeners.js';
 import getDataFromEnemyHandler from './interactionWithWebsocket/getDataFromEnemyHandler.js';
+import {gameConstants} from './constants.js';
+import changeEnemyShipPlacingStatus from './interactionWithWebsocket/functions/changeEnemyShipPlacingStatus.js';
+import changeShotStatus from './interactionWithWebsocket/functions/changeShotStatus.js';
 
 const container = document.querySelector(".container");
 let userShipsInstalled = false;
@@ -20,6 +23,10 @@ function startgame() {
     "beforeend",
      shipsTemplate
   );
+  if(gameConstants.enemyShipPlacementStatus){
+    changeEnemyShipPlacingStatus();
+  };
+  changeShotStatus();
   setDragAndDropShipsListeners();
 };
 

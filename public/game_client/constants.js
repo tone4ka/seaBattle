@@ -290,4 +290,10 @@ const enemyFieldState = [
     ],
   ];
 
-export {userFieldState, enemyFieldState}
+const gameConstants = {
+  userShipPlacementStatus: false,
+  enemyShipPlacementStatus: false,
+  userShotStatus: false,
+  enemyShotStatus: false
+}
+export {userFieldState, enemyFieldState, gameConstants}

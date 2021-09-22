@@ -1,4 +1,4 @@
-import { userFieldState, enemyFieldState } from "./fieldsStates.js";
+import { userFieldState, enemyFieldState } from "./constants.js";
 
 export default function createFields() {
   const enemyFieldBox = document.querySelector(".enemyFieldBox");

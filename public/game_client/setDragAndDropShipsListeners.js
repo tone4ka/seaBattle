@@ -1,5 +1,7 @@
 import installShipOnTheField from "./installingShipsOnTheField/installShipOnTheField.js";
 import sendDataToEnemy from "./interactionWithWebsocket/sendDataToEnemy.js";
+import { gameConstants } from "./constants.js";
+import changeShotStatus from "./interactionWithWebsocket/functions/changeShotStatus.js";
 
 export default function setDragAndDropShipsListeners() {
   const container = document.querySelector(".container");
@@ -36,6 +38,9 @@ export default function setDragAndDropShipsListeners() {
     if (countOfInstalledShips === 10) {
       const userSsipsInstallingStatus = document.querySelector('.userShipPlacingStatus');
       userSsipsInstallingStatus.style.color = 'blue';
+      gameConstants.userShipPlacementStatus = true;
+      if(!gameConstants.enemyShotStatus) gameConstants.userShotStatus = true;
+      changeShotStatus();
       sendDataToEnemy('shipsWasInstalled');
     };
   });

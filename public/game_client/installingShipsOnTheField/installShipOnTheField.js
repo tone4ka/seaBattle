@@ -1,4 +1,4 @@
-import { userFieldState, enemyFieldState } from "../fieldsStates.js";
+import { userFieldState, enemyFieldState } from "../constants.js";
 import getFieldCellsForShip from "./getFieldCellsForShip.js";
 import getShipDragStartCellData from './getShipDragStartCellData.js';
 

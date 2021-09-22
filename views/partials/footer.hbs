@@ -128,7 +128,8 @@
              const newDataFromEnemy = new Event('newDataFromEnemy');
                  newDataFromEnemy.detail = {
                         field: [...data.field],
-                        currentEvent: data.currentEvent
+                        currentEvent: data.currentEvent,
+                        gameConstants: data.gameConstants
                     };
              const container = document.querySelector('.container');
              container.dispatchEvent(newDataFromEnemy);
@@ -138,6 +139,7 @@
                  enemyName: currentEnemyName,
                  currentEvent:  event.detail.currentEvent,
                  field: event.detail.field,
+                 gameConstants: event.detail.gameConstants
                  });
         })
     });
