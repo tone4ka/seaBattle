@@ -1,4 +1,4 @@
-export default   function findNeighbors(cellRow, cellColumn, userFieldState) {
+export default function findNeighbors(cellRow, cellColumn, userFieldState) {
   const neighbors = [];
     if (cellRow > 1) neighbors.push(userFieldState[cellRow - 1][cellColumn]);
     if (cellRow < 10) neighbors.push(userFieldState[cellRow + 1][cellColumn]);

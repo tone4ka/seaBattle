@@ -6,6 +6,7 @@ import getDataFromEnemyHandler from './interactionWithWebsocket/getDataFromEnemy
 import {gameConstants} from './constants.js';
 import changeEnemyShipPlacingStatus from './interactionWithWebsocket/functions/changeEnemyShipPlacingStatus.js';
 import changeShotStatus from './interactionWithWebsocket/functions/changeShotStatus.js';
+import shot from './interactionWithWebsocket/functions/shot.js';
 
 const container = document.querySelector(".container");
 let userShipsInstalled = false;
@@ -41,6 +42,9 @@ container.addEventListener("click", (event) => {
     ship.style.flexDirection == "column"
       ? (ship.style.flexDirection = "row")
       : (ship.style.flexDirection = "column");
+  }
+  if (event.target.classList.contains("enemyCell")) {
+    if(gameConstants.userShotStatus) shot(event.target);
   }
 });
 container.addEventListener('newDataFromEnemy', (event) => {

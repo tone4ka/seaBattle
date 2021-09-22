@@ -22,17 +22,22 @@ export default function createFields() {
       userCell.innerText = `${userFieldState[i][j].text}`;
       currentUserRow.appendChild(userCell);
       userFieldState[i][j].cellNode = userCell;
+      userFieldState[i][j].row = i;
+      userFieldState[i][j].column = j;
 
       const enemyCell = document.createElement("div");
       enemyCell.classList.add(
         "cell",
         `${i}`,
         `0${j}`,
+        'enemyCell',
         `${i == 0 || j == 0 ? "gameFieldTitleCell" : "gameFieldCell"}`
       );
       enemyCell.innerText = `${enemyFieldState[i][j].text}`;
       currentEnemyRow.appendChild(enemyCell);
       enemyFieldState[i][j].cellNode = enemyCell;
+      enemyFieldState[i][j].row = i;
+      enemyFieldState[i][j].column = j;
     }
   }
 }
