@@ -6,10 +6,10 @@ router.get("/", (req, res) => {
   const user = req.currentUserName;
   console.log(user);
 
-  res.render("users", {
+  res.render("onTheSea", {
     currentUserName: req.currentUserName,
-    title: "Users",
-    isUsers: true,
+    title: "On The Sea",
+    isOnTheSea: true,
   });
 });
 

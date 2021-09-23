@@ -1,6 +1,6 @@
 import findNeighbors from "../../installingShipsOnTheField/findNeighbors.js";
 
-export default function isItDeadShip(enemyFieldState, currentShot) {
+export default function showDeadShip(enemyFieldState, currentShot) {
     let emptyNeighbors = [];
     let neighborsShipCells = [];
     function checkNeighbors(row, column){
@@ -35,11 +35,9 @@ export default function isItDeadShip(enemyFieldState, currentShot) {
                 img.style.width = '30px';
                 img.style.height = '30px';
                 img.src = '../../game_client/assets/badShot.png';
+                currentNode.innerHTML = '';
                 currentNode.appendChild(img);
             }
         })
     }
-    // console.log(neighborsShipCells);
-    // console.log(emptyNeighbors);
-
 }

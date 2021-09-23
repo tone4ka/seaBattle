@@ -52,11 +52,9 @@ padding-top: 1rem;
 .gameBox {
     margin-top: 0;
     padding-top: 20px;
-    /* background: linear-gradient(to top left, rgba(1, 104, 172, 0.247), #ffffff, rgba(1, 104, 172, 0.247)); */
     height: 100vh;
     display: flex;
     flex-direction: column;
-    /* justify-content: space-around; */
 }
 .fieldsBox {
     display: flex;

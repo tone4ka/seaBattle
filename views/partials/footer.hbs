@@ -42,14 +42,19 @@
                 createUsersList();
             } else if(data.disconnectedUser){
                 if (data.disconnectedUser == currentEnemyName) {
-                    usersBox.empty();
-                    currentEnemyName = 'noEnemy';
-                    usersBox.append(`
-                        <div class="enemyCapitulated">
-                            <h5>Your opponent has surrendered!<h5>
-                            <button class="btn btnSocket acceptSurrenderBtn">Accept surrender</button>
-                        </div>
-                    `);
+                    setTimeout(() => {
+                        $('h4').empty();
+                        $('h4').append(`And on the vastness of the horizon...`);
+                        usersBox.empty();
+                        currentEnemyName = 'noEnemy';
+                        usersBox.append(`
+                            <div class="enemyCapitulated">
+                                <h5>Your opponent has surrendered!<h5>
+                                <button class="btn btnSocket acceptSurrenderBtn">Accept surrender</button>
+                            </div>
+                        `);
+                    }, 1000);
+
                 } else {
                   if(!userInGame) $(`.${data.disconnectedUser}Box`).remove();  
                 }
@@ -60,7 +65,7 @@
                     <button class="btn btnSocket btn-blue inviteBtn ${data.connectedUser}">Invite to the game</button>
                     </div>
                     `);
-            } else { console.log('............clients socket updation error................') }
+            } else { console.log('............................') }
         });
         usersBox.click((event) => {
             if(event.target.classList.contains('btnSocket')){
@@ -80,9 +85,7 @@
                     socket.emit("start game", {respondingUserName: currentUserName, inviterName: enemyName});
                 };
                 if(event.target.classList.contains('acceptSurrenderBtn')){
-                     userInGame = false;
-                     socket.emit('userLeftTheGame', {name: currentUserName});
-                     createUsersList();
+                     document.location.reload();
                  };
             };
         });

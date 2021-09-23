@@ -294,6 +294,8 @@ const gameConstants = {
   userShipPlacementStatus: false,
   enemyShipPlacementStatus: false,
   userShotStatus: false,
-  enemyShotStatus: false
+  enemyShotStatus: false,
+  userShottedCells: 0,
+  enemyShottedCells: 0
 }
 export {userFieldState, enemyFieldState, gameConstants}

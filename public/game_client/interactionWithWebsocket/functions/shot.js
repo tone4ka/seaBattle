@@ -1,14 +1,16 @@
 import { enemyFieldState, gameConstants } from "../../constants.js";
 import sendDataToEnemy from "../sendDataToEnemy.js";
 import changeShotStatus from "./changeShotStatus.js";
-import isItDeadShip from "./isItDeadShip.js";
+import showDeadShip from "./showDeadShip.js";
+import showCongratulations from "./showCongratulations.js";
 
 export default function shot(cell) {
     const currentRow = +cell.classList[1];
     const currentColumn = +cell.classList[2];
     if(
         !enemyFieldState[currentRow][currentColumn].shottedCell && 
-        gameConstants.enemyShipPlacementStatus
+        gameConstants.enemyShipPlacementStatus &&
+        !cell.classList.contains('gameFieldTitleCell')
         ){
         const img = document.createElement('img');
         img.style.width = '30px';
@@ -21,8 +23,9 @@ export default function shot(cell) {
         if(enemyFieldState[currentRow][currentColumn].shipCell){
             img.src = '../../game_client/assets/goodShot.png';
             sendDataToEnemy('goodShot');
-            isItDeadShip(enemyFieldState, gameConstants.currentShot);
-            //ДОБАВИТЬ ПРОВЕРКУ ВЕСЬ ЛИ КОРАБЛИК СБИТ!!!!!!!!!!!!
+            showDeadShip(enemyFieldState, gameConstants.currentShot);
+            gameConstants.enemyShottedCells += 1;
+            if(gameConstants.enemyShottedCells === 20) showCongratulations();
         } else {
             img.src = '../../game_client/assets/badShot.png';
             gameConstants.userShotStatus = false;

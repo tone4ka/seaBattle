@@ -9,8 +9,6 @@ import changeShotStatus from './interactionWithWebsocket/functions/changeShotSta
 import shot from './interactionWithWebsocket/functions/shot.js';
 
 const container = document.querySelector(".container");
-let userShipsInstalled = false;
-let enemyShipsInstalled = false;
 
 function startgame() {
   const gameBox = document.querySelector(".gameBox");

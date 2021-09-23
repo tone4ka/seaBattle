@@ -1,6 +1,7 @@
 import { userFieldState, enemyFieldState, gameConstants } from "../constants.js";
 import changeEnemyShipPlacingStatus from "./functions/changeEnemyShipPlacingStatus.js";
 import changeShotStatus from "./functions/changeShotStatus.js";
+import showLoosing from "./functions/showLoosing.js"
 
 export default function getDataFromEnemyHandler(data) {
     const currentEnemyField = {...data.field};
@@ -27,7 +28,8 @@ export default function getDataFromEnemyHandler(data) {
         img.style.height = '30px';
         img.src = '../../game_client/assets/goodShot.png';
         currentCell.cellNode.appendChild(img);
-
+        gameConstants.userShottedCells += 1;
+        if(gameConstants.userShottedCells === 20) showLoosing();
     };
     if(currentEvent === 'badShot') {
         gameConstants.userShotStatus = true;

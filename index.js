@@ -9,7 +9,7 @@ const PORT = process.env.PORT || 3000;
 import session from "express-session";
 import MongoStore from "connect-mongodb-session";
 let MongoStoreSession = MongoStore(session);
-import usersRoutes from "./routes/users.js";
+import onTheSeaRoutes from "./routes/onTheSea.js";
 import homeRoutes from "./routes/home.js";
 import authRoutes from "./routes/auth.js";
 import keys from "./keys/index.js"; //сюда вынесли переменные
@@ -49,7 +49,7 @@ app.use(flash());
 app.use(varMiddleware);
 app.use(usersMiddleware);
 app.use("/", homeRoutes);
-app.use("/users", usersRoutes);
+app.use("/onthesea", onTheSeaRoutes);
 app.use("/auth", authRoutes);
 
 async function start() {

@@ -22,11 +22,6 @@ function runSocketIo(server) {
       updateClients(null, data.name);
     });
 
-    socket.on("userLeftTheGame", (data) => {
-      updateClients(data.name);
-      updateClients(null, data.name);
-    });
-
     socket.on("disconnect", () => {
       const userIndex = usersArr.indexOf(socket.user);
       usersArr.splice(userIndex, 1);
