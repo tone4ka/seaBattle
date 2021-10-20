@@ -8,22 +8,14 @@ const playingUsersArr = [];
 function runSocketIo(server) {
   io = new io.Server(server);
   io.sockets.on("connection", (socket) => {
-    console.log("Seccessful connection");
-    console.log("connected users:");
-    console.log(usersArr);
     connections.push(socket);
 
     socket.on("new user", (data) => {
         socket.user = data.name;
-        //добавить в массив юзеров инфу с именами пригласивших и статусом игры!!!!!!!!!????????
-        console.log("new user:");
-        console.log(data.name);
         usersArr.push(data.name);
-        console.log("connected users:");
-        console.log(usersArr);
         updateClients(null, data.name);
         if(usersArr.filter(name => name == data.name).length > 1){
-          console.log("double connect")
+          console.log("double connect");
           socket.disconnect();
         }
     });
@@ -31,18 +23,12 @@ function runSocketIo(server) {
     socket.on("disconnect", () => {
       const userIndex = usersArr.lastIndexOf(socket.user);
       usersArr.splice(userIndex, 1);
-      const playingUserIndex = playingUsersArr.lastIndexOf(socket.user);
-      if(playingUserIndex>0)playingUsersArr.splice(playingUserIndex, 1);
-      console.log("Disconnected user:");
-      console.log(socket.user);
-      console.log("connected users:");
-      console.log(usersArr);
+      const playingUserIndex = playingUsersArr.indexOf(socket.user);
+      if(playingUserIndex >= 0)playingUsersArr.splice(playingUserIndex, 1);
       updateClients(socket.user, null);
     });
 
     function updateClients(disconnectedUser, connectedUser) {
-      console.log("update Clients with arr:");
-      console.log(usersArr);
       io.sockets.emit("update", {
         usersArr: usersArr,
         playingUsersArr: playingUsersArr,
