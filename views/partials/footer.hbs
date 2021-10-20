@@ -22,9 +22,8 @@
                         usersBox.append(`<p> The sea is calm... The enemy is absent. </p>`);
                 } else {
                     usersList.forEach((userName) => {
-                        const btn = playingUsersArr.includes(userName) ? 
-                        `<button class="btn btnSocket inaccessibleInviteBtn ${userName}">User in battle</button>` 
-                        : `<button class="btn btnSocket btn-blue inviteBtn ${userName}">Invite to the game</button>`;
+                        const btn = playingUsersArr.includes(userName) ? `<button class="btn btnSocket inaccessibleInviteBtn ${userName}">User in battle</button>` :
+                        `<button class="btn btnSocket btn-blue inviteBtn ${userName}">Invite to the game</button>`;
                         usersBox.append(`
                         <div class="userBox ${userName}Box">
                         <p> ${userName} </p>

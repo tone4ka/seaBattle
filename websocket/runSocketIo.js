@@ -32,7 +32,7 @@ function runSocketIo(server) {
       const userIndex = usersArr.lastIndexOf(socket.user);
       usersArr.splice(userIndex, 1);
       const playingUserIndex = playingUsersArr.lastIndexOf(socket.user);
-      playingUsersArr.splice(playingUserIndex, 1);
+      if(playingUserIndex>0)playingUsersArr.splice(playingUserIndex, 1);
       console.log("Disconnected user:");
       console.log(socket.user);
       console.log("connected users:");
