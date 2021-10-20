@@ -3,6 +3,7 @@ let io = socket_io;
 import usersArr from "../variables/ausersArr.js";
 
 const connections = [];
+const playingUsersArr = [];
 
 function runSocketIo(server) {
   io = new io.Server(server);
@@ -13,18 +14,25 @@ function runSocketIo(server) {
     connections.push(socket);
 
     socket.on("new user", (data) => {
-      socket.user = data.name;
-      usersArr.push(data.name);
-      console.log("new user:");
-      console.log(data.name);
-      console.log("connected users:");
-      console.log(usersArr);
-      updateClients(null, data.name);
+        socket.user = data.name;
+        //добавить в массив юзеров инфу с именами пригласивших и статусом игры!!!!!!!!!????????
+        console.log("new user:");
+        console.log(data.name);
+        usersArr.push(data.name);
+        console.log("connected users:");
+        console.log(usersArr);
+        updateClients(null, data.name);
+        if(usersArr.filter(name => name == data.name).length > 1){
+          console.log("double connect")
+          socket.disconnect();
+        }
     });
 
     socket.on("disconnect", () => {
-      const userIndex = usersArr.indexOf(socket.user);
+      const userIndex = usersArr.lastIndexOf(socket.user);
       usersArr.splice(userIndex, 1);
+      const playingUserIndex = playingUsersArr.lastIndexOf(socket.user);
+      playingUsersArr.splice(playingUserIndex, 1);
       console.log("Disconnected user:");
       console.log(socket.user);
       console.log("connected users:");
@@ -37,6 +45,7 @@ function runSocketIo(server) {
       console.log(usersArr);
       io.sockets.emit("update", {
         usersArr: usersArr,
+        playingUsersArr: playingUsersArr,
         disconnectedUser: disconnectedUser,
         connectedUser: connectedUser,
       });
@@ -50,6 +59,8 @@ function runSocketIo(server) {
       });
     });
     socket.on("start game", (data) => {
+      playingUsersArr.push(data.inviterName);
+      playingUsersArr.push(data.respondingUserName);
       io.sockets.emit("the game has begun", {
         inviterName: data.inviterName,
         respondingUserName: data.respondingUserName,
