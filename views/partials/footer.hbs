@@ -13,6 +13,12 @@
         let usersList = [];
         let playingUsersArr = [];
         let userInGame = false;
+
+        const audioMpr = document.createElement('audio');
+        function playClickSound() {
+            audioMpr.src = `../../game_client/assets/sounds/click.mp3`;
+            audioMpr.play();
+            }
         
         function createUsersList() {
                 usersBox.empty();
@@ -81,6 +87,7 @@
         });
         usersBox.click((event) => {
             if(event.target.classList.contains('btnSocket')){
+                playClickSound();
                 const currentBtn = event.target;
                 const enemyName = Array.from(currentBtn.classList).slice(-1)[0];
                 const enemyBox = $(`.${enemyName}Box`);

@@ -1,7 +1,8 @@
 import { userFieldState, enemyFieldState, gameConstants } from "../constants.js";
 import changeEnemyShipPlacingStatus from "./functions/changeEnemyShipPlacingStatus.js";
 import changeShotStatus from "./functions/changeShotStatus.js";
-import showLoosing from "./functions/showLoosing.js"
+import showLoosing from "./functions/showLoosing.js";
+import playSound from "../playSound.js";
 
 export default function getDataFromEnemyHandler(data) {
     const currentEnemyField = {...data.field};
@@ -16,11 +17,8 @@ export default function getDataFromEnemyHandler(data) {
         changeShotStatus();
     };
     if(currentEvent === 'goodShot') {
+        playSound('goodShot');
         const currentCell = userFieldState[data.gameConstants.currentShot.row][data.gameConstants.currentShot.column];
-        /*cellNode: div.cell.1.01.gameFieldCell
-        shipCell: div.shipCell.1
-        shottedCell: true
-        */
         currentCell.shottedCell = true;
         currentCell.cellNode.innerHTML = '';
         const img = document.createElement('img');
@@ -32,6 +30,7 @@ export default function getDataFromEnemyHandler(data) {
         if(gameConstants.userShottedCells === 20) showLoosing();
     };
     if(currentEvent === 'badShot') {
+        playSound('badShot');
         gameConstants.userShotStatus = true;
         gameConstants.enemyShotStatus = false;
         changeShotStatus();

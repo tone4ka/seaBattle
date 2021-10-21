@@ -1,3 +1,5 @@
+import playSound from "../../playSound.js"
+
 export default function showLoosing() {
     const title = document.querySelector('h4');
     title.innerHTML = 'Your flotilla is broken...';
@@ -11,5 +13,6 @@ export default function showLoosing() {
     gameBox.innerHTML = '';
     gameBox.appendChild(img);
     gameBox.style.alignItems = 'center';
+    playSound('fail');
     setTimeout(()=>document.location.reload(), 6000);
 }

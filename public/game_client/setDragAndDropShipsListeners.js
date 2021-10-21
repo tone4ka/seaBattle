@@ -2,6 +2,10 @@ import installShipOnTheField from "./installingShipsOnTheField/installShipOnTheF
 import sendDataToEnemy from "./interactionWithWebsocket/sendDataToEnemy.js";
 import { gameConstants } from "./constants.js";
 import changeShotStatus from "./interactionWithWebsocket/functions/changeShotStatus.js";
+import { userFieldState } from "./constants.js";
+import getFieldCellsForShip from "./installingShipsOnTheField/getFieldCellsForShip.js";
+import getShipDragStartCellData from './installingShipsOnTheField/getShipDragStartCellData.js';
+import playSound from "./playSound.js";
 
 export default function setDragAndDropShipsListeners() {
   const container = document.querySelector(".container");
@@ -34,7 +38,10 @@ export default function setDragAndDropShipsListeners() {
         dropFieldCell,
         draggedShip
         );
-    if(wasTheShipInstalled) countOfInstalledShips += 1;
+    if(wasTheShipInstalled) {
+      countOfInstalledShips += 1;
+      playSound('installShip');
+    }
     if (countOfInstalledShips === 10) {
       const userSsipsInstallingStatus = document.querySelector('.userShipPlacingStatus');
       userSsipsInstallingStatus.style.color = 'blue';
@@ -43,5 +50,38 @@ export default function setDragAndDropShipsListeners() {
       changeShotStatus();
       sendDataToEnemy('shipsWasInstalled');
     };
+    if (event.target.classList.contains("gameFieldCell")) {
+      const dropFieldCell = event.target;
+      const shipDragStartCellData = getShipDragStartCellData (shipCells, cursorStartCoordinates);
+      const fieldCellsDataForShip = getFieldCellsForShip (shipDragStartCellData, dropFieldCell, userFieldState);
+      fieldCellsDataForShip.fieldCellsForShip.forEach(cell => cell.cellNode.style.border = "1px solid rgb(2, 95, 156)");
+    }
   });
+  container.addEventListener("dragleave", function(event) {
+    if (
+      !event.target.classList.contains("enemyCell") &&
+      (event.target.classList.contains("gameFieldCell") || event.target.classList.contains("shipCell"))
+    ) {
+      const dropFieldCell = event.target.classList.contains("shipCell") ? event.target.parentElement : event.target;
+      const shipDragStartCellData = getShipDragStartCellData (shipCells, cursorStartCoordinates);
+      const fieldCellsDataForShip = getFieldCellsForShip (shipDragStartCellData, dropFieldCell, userFieldState);
+      fieldCellsDataForShip.fieldCellsForShip.forEach(cell => cell.cellNode.style.border = "1px solid rgb(2, 95, 156)");
+    }
+  }, false);
+  container.addEventListener("dragover", function(event) {
+    if (
+      !event.target.classList.contains("enemyCell") &&
+      (event.target.classList.contains("gameFieldCell") || event.target.classList.contains("shipCell"))
+    ) {
+      const dropFieldCell = event.target.classList.contains("shipCell") ? event.target.parentElement : event.target;
+      const shipDragStartCellData = getShipDragStartCellData (shipCells, cursorStartCoordinates);
+      const fieldCellsDataForShip = getFieldCellsForShip (shipDragStartCellData, dropFieldCell, userFieldState);
+      if(fieldCellsDataForShip.validPlace) {
+        fieldCellsDataForShip.fieldCellsForShip.forEach(cell => cell.cellNode.style.border = "3px solid rgb(2, 95, 156, 0.671)");
+      } else {
+        fieldCellsDataForShip.fieldCellsForShip.forEach(cell => cell.cellNode.style.border = "3px solid rgb(255, 4, 4, 0.671)");
+      }
+    }
+  }, false);
+
 };

@@ -1,3 +1,5 @@
+import playSound from "../../playSound.js"
+
 export default function showCongratulations() {
     const title = document.querySelector('h4');
     title.innerHTML = 'CONGRATULATIONS!';
@@ -11,5 +13,6 @@ export default function showCongratulations() {
     gameBox.innerHTML = '';
     gameBox.appendChild(img);
     gameBox.style.alignItems = 'center';
+    playSound('win');
     setTimeout(()=>document.location.reload(), 6000);
 }

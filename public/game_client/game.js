@@ -7,6 +7,7 @@ import {gameConstants} from './constants.js';
 import changeEnemyShipPlacingStatus from './interactionWithWebsocket/functions/changeEnemyShipPlacingStatus.js';
 import changeShotStatus from './interactionWithWebsocket/functions/changeShotStatus.js';
 import shot from './interactionWithWebsocket/functions/shot.js';
+import playSound from './playSound.js';
 
 const container = document.querySelector(".container");
 
@@ -36,6 +37,7 @@ container.addEventListener("click", (event) => {
     startgame();
   }
   if (event.target.classList.contains("shipCell")) {
+    playSound('click');
     const ship = event.target.parentNode;
     ship.style.flexDirection == "column"
       ? (ship.style.flexDirection = "row")

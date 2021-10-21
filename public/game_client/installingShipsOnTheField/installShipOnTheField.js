@@ -11,11 +11,11 @@ export default function installShipOnTheField(
   const shipDragStartCellData = getShipDragStartCellData (shipCells, cursorStartCoordinates);
 
   const fieldCellsDataForShip = getFieldCellsForShip (shipDragStartCellData, dropFieldCell, userFieldState);
-  if(fieldCellsDataForShip) {
-    for(let i = 0; i<fieldCellsDataForShip.length; i += 1) {
-      fieldCellsDataForShip[i].shipCell = shipCells[i].cell;
-      fieldCellsDataForShip[i].cellNode.style.backgroundColor = 'coral';
-      fieldCellsDataForShip[i].cellNode.appendChild(shipCells[i].cell);
+  if(fieldCellsDataForShip.validPlace) {
+    for(let i = 0; i<fieldCellsDataForShip.fieldCellsForShip.length; i += 1) {
+      fieldCellsDataForShip.fieldCellsForShip[i].shipCell = shipCells[i].cell;
+      fieldCellsDataForShip.fieldCellsForShip[i].cellNode.style.backgroundColor = 'coral';
+      fieldCellsDataForShip.fieldCellsForShip[i].cellNode.appendChild(shipCells[i].cell);
       shipCells[i].cell.classList.remove('notInstalledShipCell')
     }
     draggedShip.innerHTML = '';
