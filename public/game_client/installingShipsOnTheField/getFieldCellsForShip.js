@@ -14,9 +14,9 @@ export default function getFieldCellsForShip(
   const deckCount = +shipDragStartCellData.deckCount;
   const row = +dropFieldCell.classList[1];
   const column = +dropFieldCell.classList[2];
-  const {isVertical} = shipDragStartCellData
+  const {isVertical} = shipDragStartCellData;
 
-  if(startdragShipCellNumber != 1) validPlace = false;
+  // if(startdragShipCellNumber != 1) validPlace = false;
 
   if (
     dropFieldCell.shipCell ||
@@ -24,7 +24,7 @@ export default function getFieldCellsForShip(
   )
   validPlace = false;
 
-  if (shipDragStartCellData.isVertical) {
+  if (isVertical) {
     if (
       startdragShipCellNumber > row ||
       deckCount - startdragShipCellNumber + row > 10
@@ -39,7 +39,7 @@ export default function getFieldCellsForShip(
   };
 
   let neighbors = [];
-  if(userFieldState[row]){
+  if(userFieldState[row]){//проверяю, т.к. убрала ретурн, заменив его на переменную validPlace
     if(userFieldState[row][column]){
       fieldCellsForShip.push(userFieldState[row][column]);
       neighbors = neighbors.concat(findNeighbors(row, column, userFieldState));
@@ -59,7 +59,22 @@ export default function getFieldCellsForShip(
           }
         }
       }
-
+      if (startdragShipCellNumber > 1) {
+        for (
+          let i = startdragShipCellNumber - 1;
+          i >= 1;
+          i--
+        ) {
+          const currentRow = isVertical ? row - (startdragShipCellNumber - i) : row;
+          const currentColumn = isVertical ? column : column - (startdragShipCellNumber - i);
+          if(userFieldState[currentRow]){
+            if(userFieldState[currentRow][currentColumn]){
+              fieldCellsForShip.push(userFieldState[currentRow][currentColumn]);
+              neighbors = neighbors.concat(findNeighbors(currentRow, currentColumn, userFieldState));
+            }
+          }
+        }
+      }
     }
   }
 

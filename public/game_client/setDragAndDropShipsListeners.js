@@ -65,7 +65,11 @@ export default function setDragAndDropShipsListeners() {
       const dropFieldCell = event.target.classList.contains("shipCell") ? event.target.parentElement : event.target;
       const shipDragStartCellData = getShipDragStartCellData (shipCells, cursorStartCoordinates);
       const fieldCellsDataForShip = getFieldCellsForShip (shipDragStartCellData, dropFieldCell, userFieldState);
-      fieldCellsDataForShip.fieldCellsForShip.forEach(cell => cell.cellNode.style.border = "1px solid rgb(2, 95, 156)");
+      fieldCellsDataForShip.fieldCellsForShip.forEach((cell) => {
+        if(cell.cellNode.classList.contains("gameFieldCell")){
+          cell.cellNode.style.border = "1px solid rgb(2, 95, 156)"
+        }
+      });
     }
   }, false);
   container.addEventListener("dragover", function(event) {
@@ -77,9 +81,17 @@ export default function setDragAndDropShipsListeners() {
       const shipDragStartCellData = getShipDragStartCellData (shipCells, cursorStartCoordinates);
       const fieldCellsDataForShip = getFieldCellsForShip (shipDragStartCellData, dropFieldCell, userFieldState);
       if(fieldCellsDataForShip.validPlace) {
-        fieldCellsDataForShip.fieldCellsForShip.forEach(cell => cell.cellNode.style.border = "3px solid rgb(2, 95, 156, 0.671)");
+        fieldCellsDataForShip.fieldCellsForShip.forEach((cell) => {
+          if(cell.cellNode.classList.contains("gameFieldCell")){
+            cell.cellNode.style.border = "3px solid rgb(2, 95, 156, 0.671)";
+          }
+        });
       } else {
-        fieldCellsDataForShip.fieldCellsForShip.forEach(cell => cell.cellNode.style.border = "3px solid rgb(255, 4, 4, 0.671)");
+        fieldCellsDataForShip.fieldCellsForShip.forEach((cell) => {
+          if(cell.cellNode.classList.contains("gameFieldCell")){
+            cell.cellNode.style.border = "3px solid rgb(255, 4, 4, 0.671)";
+          }
+        });
       }
     }
   }, false);

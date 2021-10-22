@@ -3,7 +3,7 @@ import mailjet from "node-mailjet";
 mailjet.connect(
   "e81f45dcc6a31552f79e4f380185376c",
   "ff0f6c1a720ab5a0fb00058b09149231"
-); //для почты
+);
 
 function sendMail(email, name) {
   const request = mailjet.post("send", { version: "v3" }).request({
