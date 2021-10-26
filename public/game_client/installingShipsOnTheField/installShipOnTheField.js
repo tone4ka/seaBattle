@@ -1,4 +1,4 @@
-import { userFieldState, enemyFieldState } from "../constants.js";
+import { userFieldState } from "../constants.js";
 import getFieldCellsForShip from "./getFieldCellsForShip.js";
 import getShipDragStartCellData from './getShipDragStartCellData.js';
 
@@ -12,11 +12,11 @@ export default function installShipOnTheField(
 
   const fieldCellsDataForShip = getFieldCellsForShip (shipDragStartCellData, dropFieldCell, userFieldState);
   if(fieldCellsDataForShip.validPlace) {
-    for(let i = 0; i<fieldCellsDataForShip.fieldCellsForShip.length; i += 1) {
+    for(let i = 0; i < fieldCellsDataForShip.fieldCellsForShip.length; i += 1) {
       fieldCellsDataForShip.fieldCellsForShip[i].shipCell = shipCells[i].cell;
-      fieldCellsDataForShip.fieldCellsForShip[i].cellNode.style.backgroundColor = 'coral';
+      fieldCellsDataForShip.fieldCellsForShip[i].cellNode.style.backgroundColor = 'coral';// какие-то отступы светились
       fieldCellsDataForShip.fieldCellsForShip[i].cellNode.appendChild(shipCells[i].cell);
-      shipCells[i].cell.classList.remove('notInstalledShipCell')
+      shipCells[i].cell.classList.remove('notInstalledShipCell');//ховер убрираю(можно было по-другому это сделать:\)
     }
     draggedShip.innerHTML = '';
     return true;

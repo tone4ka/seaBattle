@@ -16,8 +16,6 @@ export default function getFieldCellsForShip(
   const column = +dropFieldCell.classList[2];
   const {isVertical} = shipDragStartCellData;
 
-  // if(startdragShipCellNumber != 1) validPlace = false;
-
   if (
     dropFieldCell.shipCell ||
     dropFieldCell.classList.contains("gameFieldTitleCell")
@@ -39,7 +37,7 @@ export default function getFieldCellsForShip(
   };
 
   let neighbors = [];
-  if(userFieldState[row]){//проверяю, т.к. убрала ретурн, заменив его на переменную validPlace
+  if(userFieldState[row]){
     if(userFieldState[row][column]){
       fieldCellsForShip.push(userFieldState[row][column]);
       neighbors = neighbors.concat(findNeighbors(row, column, userFieldState));
@@ -77,9 +75,6 @@ export default function getFieldCellsForShip(
       }
     }
   }
-
-
-
 
   const isNeighborsShips = neighbors.some((neighbor) => neighbor.shipCell)
   if (isNeighborsShips) validPlace = false;
