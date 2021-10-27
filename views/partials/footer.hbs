@@ -41,23 +41,21 @@
         };
 
         socket.on("connect", () => {
-            console.log("clients connection:");
-            console.log(currentUserName);
             socket.emit('new user', {name: currentUserName});
         });
 
         socket.on("disconnect", () => {
-            console.log("disconnect");
             $('h4').empty();
             $('h4').append(`...This account already is online. Sign out on other devices.`);
             usersBox.empty();
         });
 
         socket.on('update', (data) => {
+            const oldUserList = [...usersList];
             usersList = [...data.usersArr];
             playingUsersArr = [...data.playingUsersArr];
             if(data.connectedUser == currentUserName){
-                if(usersList.filter(name => name == currentUserName).length == 1)createUsersList();
+                if(usersList.filter(name => name == currentUserName).length == 1) createUsersList();
             } else if(data.disconnectedUser){
                 if (data.disconnectedUser == currentEnemyName) {
                     setTimeout(() => {
@@ -72,22 +70,26 @@
                             </div>
                         `);
                     }, 1000);
-
                 } else {
                   if(!userInGame) {
                       const disconnectUserBox = document.querySelectorAll(`.${data.disconnectedUser}Box`);
                       disconnectUserBox[disconnectUserBox.length-1].remove();
+                      if(usersList.length <= 1) {
+                        usersBox.append(`<p> The sea is calm... The enemy is absent. </p>`);
+                      }
                   }
                 }
             } else if(!userInGame) {
+                if(oldUserList.length <= 1) usersBox.empty();
                 usersBox.append(`
                     <div class="userBox ${data.connectedUser}Box">
                     <p> ${data.connectedUser} </p>
                     <button class="btn btnSocket btn-blue inviteBtn ${data.connectedUser}">Invite to the game</button>
                     </div>
                     `);
-            } else { console.log('............................') }
+            }
         });
+
         usersBox.click((event) => {
             if(event.target.classList.contains('btnSocket')){
                 playClickSound();
@@ -111,6 +113,7 @@
                  };
             };
         });
+
         socket.on('invitation created', (data) => {
             if(data.inviterName != currentUserName && data.invitedUserName == currentUserName){
                 let inviterBox = $(`.${data.inviterName}Box`);
@@ -123,6 +126,7 @@
                
             }
         });
+
         socket.on('the game has begun', (data) => {
             if(data.inviterName == currentUserName || data.respondingUserName == currentUserName){
                 currentEnemyName = data.inviterName == currentUserName ? data.respondingUserName : data.inviterName;
@@ -133,14 +137,13 @@
                 <button class="btn btnSocket btn-blue startGameBtn ${currentEnemyName}">Start game</button>
                 </div>
                 `);
-                const gameBox = $('.gameBox');
             } else {
+                const inviterBox  = $(`.${data.inviterName}Box`);
+                const responderBox =  $(`.${data.respondingUserName}Box`);
                 const inviterBtn  = $(`.${data.inviterName}`);
                 const responderBtn =  $(`.${data.respondingUserName}`);
                 inviterBtn.remove();
                 responderBtn.remove();
-                const inviterBox  = $(`.${data.inviterName}Box`);
-                const responderBox =  $(`.${data.respondingUserName}Box`);
                 inviterBox.append(`
                         <button class="btn btnSocket inaccessibleInviteBtn ${data.inviterName}">User in battle</button>
                         `);
@@ -149,6 +152,7 @@
                         `);
             }
         });
+
         socket.on(`${currentUserName}`, (data) => {
              const newDataFromEnemy = new Event('newDataFromEnemy');
                  newDataFromEnemy.detail = {
@@ -159,6 +163,7 @@
              const container = document.querySelector('.container');
              container.dispatchEvent(newDataFromEnemy);
         });
+
         $('.container').bind('sendDataToEnemy', (event) => {
              socket.emit(`dataToEnemy`, {
                  enemyName: currentEnemyName,
