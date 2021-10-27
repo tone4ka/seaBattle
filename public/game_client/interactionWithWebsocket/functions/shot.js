@@ -3,7 +3,7 @@ import sendDataToEnemy from "../sendDataToEnemy.js";
 import changeShotStatus from "./changeShotStatus.js";
 import showDeadShip from "./showDeadShip.js";
 import showCongratulations from "./showCongratulations.js";
-import playSound from "../../playSound.js"
+import playSound from "../../playSound.js";
 
 export default function shot(cell) {
     const currentRow = +cell.classList[1];

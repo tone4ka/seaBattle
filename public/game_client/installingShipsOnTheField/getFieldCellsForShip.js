@@ -5,6 +5,7 @@ export default function getFieldCellsForShip(
   dropFieldCell,
   userFieldState
 ) {
+  const fieldSize = 10;
   let validPlace = true;
   if(!shipDragStartCellData) validPlace = false;
   if(!dropFieldCell.classList.contains('cell')) validPlace = false;
@@ -25,13 +26,13 @@ export default function getFieldCellsForShip(
   if (isVertical) {
     if (
       startdragShipCellNumber > row ||
-      deckCount - startdragShipCellNumber + row > 10
+      deckCount - startdragShipCellNumber + row > fieldSize
     )
     validPlace = false;
   } else {
     if (
       startdragShipCellNumber > column ||
-      deckCount - startdragShipCellNumber + column > 10
+      deckCount - startdragShipCellNumber + column > fieldSize
     )
     validPlace = false;
   };
@@ -76,7 +77,7 @@ export default function getFieldCellsForShip(
     }
   }
 
-  const isNeighborsShips = neighbors.some((neighbor) => neighbor.shipCell)
+  const isNeighborsShips = neighbors.some((neighbor) => neighbor.shipCell);
   if (isNeighborsShips) validPlace = false;
 
   return {

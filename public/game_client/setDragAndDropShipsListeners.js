@@ -3,9 +3,8 @@ import sendDataToEnemy from "./interactionWithWebsocket/sendDataToEnemy.js";
 import { gameConstants } from "./constants.js";
 import changeShotStatus from "./interactionWithWebsocket/functions/changeShotStatus.js";
 import { userFieldState } from "./constants.js";
-import getFieldCellsForShip from "./installingShipsOnTheField/getFieldCellsForShip.js";
-import getShipDragStartCellData from './installingShipsOnTheField/getShipDragStartCellData.js';
 import playSound from "./playSound.js";
+import changeCellsBorderColor from './changeCellsBorderColor.js'
 
 export default function setDragAndDropShipsListeners() {
   const container = document.querySelector(".container");
@@ -13,6 +12,9 @@ export default function setDragAndDropShipsListeners() {
   let cursorStartCoordinates = {};
   let draggedShip;
   let countOfInstalledShips = 0;
+  const thinBlueBorderColor =  "1px solid rgb(2, 95, 156)";
+
+
   container.addEventListener("dragstart", (event) => {
     cursorStartCoordinates.left = event.clientX;
     cursorStartCoordinates.top = event.clientY;
@@ -30,6 +32,7 @@ export default function setDragAndDropShipsListeners() {
       };
     })
   });
+
   container.addEventListener("drop", (event) => {
     const dropFieldCell = event.target;
     const wasTheShipInstalled = installShipOnTheField(
@@ -50,49 +53,50 @@ export default function setDragAndDropShipsListeners() {
       changeShotStatus();
       sendDataToEnemy('shipsWasInstalled');
     };
-    if (event.target.classList.contains("gameFieldCell")) {
+    if (
+      event.target.classList.contains("gameFieldCell") ||
+      event.target.classList.contains("shipCell")
+      ) {
       const dropFieldCell = event.target;
-      const shipDragStartCellData = getShipDragStartCellData (shipCells, cursorStartCoordinates);
-      const fieldCellsDataForShip = getFieldCellsForShip (shipDragStartCellData, dropFieldCell, userFieldState);
-      fieldCellsDataForShip.fieldCellsForShip.forEach(cell => cell.cellNode.style.border = "1px solid rgb(2, 95, 156)");
+      changeCellsBorderColor(
+        thinBlueBorderColor,
+        dropFieldCell,
+        shipCells, 
+        cursorStartCoordinates, 
+        userFieldState
+        );
     }
   });
+
   container.addEventListener("dragleave", function(event) {
     if (
       !event.target.classList.contains("enemyCell") &&
       (event.target.classList.contains("gameFieldCell") || event.target.classList.contains("shipCell"))
     ) {
       const dropFieldCell = event.target.classList.contains("shipCell") ? event.target.parentElement : event.target;
-      const shipDragStartCellData = getShipDragStartCellData (shipCells, cursorStartCoordinates);
-      const fieldCellsDataForShip = getFieldCellsForShip (shipDragStartCellData, dropFieldCell, userFieldState);
-      fieldCellsDataForShip.fieldCellsForShip.forEach((cell) => {
-        if(cell.cellNode.classList.contains("gameFieldCell")){
-          cell.cellNode.style.border = "1px solid rgb(2, 95, 156)"
-        }
-      });
+      changeCellsBorderColor(
+        thinBlueBorderColor,
+        dropFieldCell,
+        shipCells, 
+        cursorStartCoordinates, 
+        userFieldState
+        );
     }
   }, false);
+
   container.addEventListener("dragover", function(event) {
     if (
       !event.target.classList.contains("enemyCell") &&
       (event.target.classList.contains("gameFieldCell") || event.target.classList.contains("shipCell"))
     ) {
       const dropFieldCell = event.target.classList.contains("shipCell") ? event.target.parentElement : event.target;
-      const shipDragStartCellData = getShipDragStartCellData (shipCells, cursorStartCoordinates);
-      const fieldCellsDataForShip = getFieldCellsForShip (shipDragStartCellData, dropFieldCell, userFieldState);
-      if(fieldCellsDataForShip.validPlace) {
-        fieldCellsDataForShip.fieldCellsForShip.forEach((cell) => {
-          if(cell.cellNode.classList.contains("gameFieldCell")){
-            cell.cellNode.style.border = "3px solid rgb(2, 95, 156, 0.671)";
-          }
-        });
-      } else {
-        fieldCellsDataForShip.fieldCellsForShip.forEach((cell) => {
-          if(cell.cellNode.classList.contains("gameFieldCell")){
-            cell.cellNode.style.border = "3px solid rgb(255, 4, 4, 0.671)";
-          }
-        });
-      }
+      changeCellsBorderColor(
+        'blueOrRed',
+        dropFieldCell,
+        shipCells, 
+        cursorStartCoordinates, 
+        userFieldState
+        )
     }
   }, false);
 

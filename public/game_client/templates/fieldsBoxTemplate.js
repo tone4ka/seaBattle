@@ -14,5 +14,3 @@ const fieldsBoxTemplate =     `
 `;
 
 export default fieldsBoxTemplate;
-
-//<p align="center">Somewhere here the enemy ships ...</p>

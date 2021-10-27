@@ -1,6 +1,6 @@
 import findNeighbors from "../../installingShipsOnTheField/findNeighbors.js";
 
-export default function showDeadShip(enemyFieldState, currentShot) {
+export default function showDeadShip(enemyFieldState, currentShot) {//обводим полностью сбитый корабль пустыми выстрелами
     let emptyNeighbors = [];
     let neighborsShipCells = [];
     function checkNeighbors(row, column){
@@ -9,7 +9,7 @@ export default function showDeadShip(enemyFieldState, currentShot) {
         let newNeighborsShipCells = neighbors.filter((cell) => cell.shipCell);
         newNeighborsShipCells = newNeighborsShipCells.filter((newCell) => {
             return neighborsShipCells.every((oldCell) => {
-                return oldCell.row != newCell.row || oldCell.column != newCell.column
+                return oldCell.row != newCell.row || oldCell.column != newCell.column;
             } );
         })
         neighborsShipCells = neighborsShipCells.concat(newNeighborsShipCells);
@@ -29,7 +29,7 @@ export default function showDeadShip(enemyFieldState, currentShot) {
                 cell.shottedCell = true;
                 const currentNode = enemyCellNodes.find((cellNode) => {
                     const classArr = Array.from(cellNode.classList);
-                    return +classArr[1] == cell.row && +classArr[2] == cell.column
+                    return +classArr[1] == cell.row && +classArr[2] == cell.column;
                 });
                 const img = document.createElement('img');
                 img.style.width = '30px';
