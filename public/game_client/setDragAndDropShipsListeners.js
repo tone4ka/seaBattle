@@ -12,6 +12,12 @@ export default function setDragAndDropShipsListeners() {
   let draggedShip;
   let countOfInstalledShips = 0;
   const thinBlueBorderColor =  "1px solid rgb(2, 95, 156)";
+  const isValidTargetCell = (event) => {
+    return (
+      !event.target.classList.contains("enemyCell") &&
+      (event.target.classList.contains("gameFieldCell") || event.target.classList.contains("shipCell"))
+    );
+  }     
 
   container.addEventListener("dragstart", (event) => {
     cursorStartCoordinates.left = event.clientX;
@@ -51,14 +57,10 @@ export default function setDragAndDropShipsListeners() {
       changeShotStatus();
       sendDataToEnemy('shipsWasInstalled');
     };
-    if (
-      event.target.classList.contains("gameFieldCell") ||
-      event.target.classList.contains("shipCell")
-      ) {
-      const dropFieldCell = event.target;
+    if (isValidTargetCell(event)) {
       changeCellsBorderColor(
         thinBlueBorderColor,
-        dropFieldCell,
+        event,
         shipCells, 
         cursorStartCoordinates
         );
@@ -66,14 +68,10 @@ export default function setDragAndDropShipsListeners() {
   });
 
   container.addEventListener("dragleave", function(event) {
-    if (
-      !event.target.classList.contains("enemyCell") &&
-      (event.target.classList.contains("gameFieldCell") || event.target.classList.contains("shipCell"))
-    ) {
-      const dropFieldCell = event.target.classList.contains("shipCell") ? event.target.parentElement : event.target;
+    if (isValidTargetCell(event)) {
       changeCellsBorderColor(
         thinBlueBorderColor,
-        dropFieldCell,
+        event,
         shipCells, 
         cursorStartCoordinates
         );
@@ -81,14 +79,10 @@ export default function setDragAndDropShipsListeners() {
   }, false);
 
   container.addEventListener("dragover", function(event) {
-    if (
-      !event.target.classList.contains("enemyCell") &&
-      (event.target.classList.contains("gameFieldCell") || event.target.classList.contains("shipCell"))
-    ) {
-      const dropFieldCell = event.target.classList.contains("shipCell") ? event.target.parentElement : event.target;
+    if (isValidTargetCell(event)) {
       changeCellsBorderColor(
         'blueOrRed',
-        dropFieldCell,
+        event,
         shipCells, 
         cursorStartCoordinates
         )
