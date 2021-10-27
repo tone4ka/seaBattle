@@ -24,7 +24,7 @@ function runSocketIo(server) {
       const userIndex = usersArr.lastIndexOf(socket.user);
       usersArr.splice(userIndex, 1);
       const playingUserIndex = playingUsersArr.indexOf(socket.user);
-      if(playingUserIndex >= 0)playingUsersArr.splice(playingUserIndex, 1);
+      if(playingUserIndex >= 0) playingUsersArr.splice(playingUserIndex, 1);
       updateClients(socket.user, null);
     });
 
@@ -39,11 +39,11 @@ function runSocketIo(server) {
 
     socket.on("invite user", (data) => {
       io.sockets.emit("invitation created", {
-        text: `it is an invitation for ${data.invitedUserName} from ${data.inviterName}`,
         invitedUserName: data.invitedUserName,
         inviterName: data.inviterName,
       });
     });
+
     socket.on("start game", (data) => {
       playingUsersArr.push(data.inviterName);
       playingUsersArr.push(data.respondingUserName);
@@ -52,6 +52,7 @@ function runSocketIo(server) {
         respondingUserName: data.respondingUserName,
       });
     });
+    
     socket.on("dataToEnemy", (data) => {
       io.sockets.emit(`${data.enemyName}`, {
         field: [...data.field],

@@ -49,7 +49,8 @@ export default function setDragAndDropShipsListeners() {
       countOfInstalledShips += 1;
       playSound('installShip');
     }
-    if (countOfInstalledShips === 10) {
+    const totalCountOfShips = 10;
+    if (countOfInstalledShips === totalCountOfShips) {
       const userShipsInstallingStatus = document.querySelector('.userShipPlacingStatus');
       userShipsInstallingStatus.style.color = 'blue';
       gameConstants.userShipPlacementStatus = true;
