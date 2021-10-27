@@ -50,8 +50,8 @@ export default function setDragAndDropShipsListeners() {
       playSound('installShip');
     }
     if (countOfInstalledShips === 10) {
-      const userSsipsInstallingStatus = document.querySelector('.userShipPlacingStatus');
-      userSsipsInstallingStatus.style.color = 'blue';
+      const userShipsInstallingStatus = document.querySelector('.userShipPlacingStatus');
+      userShipsInstallingStatus.style.color = 'blue';
       gameConstants.userShipPlacementStatus = true;
       if(!gameConstants.enemyShotStatus) gameConstants.userShotStatus = true;
       changeShotStatus();

@@ -1,6 +1,6 @@
 import express from "express";
 const Router = express;
-import bcrypt from "bcryptjs"; //для шифрования ключей
+import bcrypt from "bcryptjs"; 
 import crypto from "crypto"; // для генерации пароля(при восстановлении пароля)
 import User from "../models/user.js";
 const router = Router();
@@ -70,7 +70,7 @@ router.post("/register", async (req, res) => {
       });
       await user.save();
       res.redirect("/auth/login#login");
-      sendMail(user.email, user.name); //подставить потом почту пользователя!!!!!!!
+      sendMail(user.email, user.name);
     }
   } catch (error) {
     console.log(error);
@@ -97,8 +97,7 @@ router.post("/reset", (req, res) => {
         candidate.resetToken = token;
         candidate.resetTokenExp = Date.now() + 60 * 60 * 1000;
         await candidate.save();
-        resetPassSendMail(candidate.email, token); //подставили почту пользователя!!!!!!!
-        console.log("!!");
+        resetPassSendMail(candidate.email, token); 
         res.redirect("/auth/login");
       } else {
         req.flash("error", "There is no such email");
@@ -136,21 +135,18 @@ router.get("/password/:token", async (req, res) => {
 
 router.post("/password", async (req, res) => {
   try {
-    console.log("1");
     const user = await User.findOne({
       _id: req.body.userId,
       resetToken: req.body.token,
       resetTokenExp: { $gt: Date.now() },
     });
     if (user) {
-      console.log("2");
       user.password = await bcrypt.hash(req.body.password, 10);
       user.resToken = undefined;
       user.resetTokenExp = undefined;
       await user.save();
       res.redirect("/auth/login");
     } else {
-      console.log("3");
       req.flash("loginError", "Token expired");
       res.redirect("/auth/login");
     }
