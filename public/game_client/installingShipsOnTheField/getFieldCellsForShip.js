@@ -2,24 +2,24 @@ import findNeighbors from './findNeighbors.js'
 
 export default function getFieldCellsForShip(
   shipDragStartCellData,
-  dropFieldCell,
+  eventTargetFieldCell,
   userFieldState
 ) {
   const fieldSize = 10;
   let validPlace = true;
   if(!shipDragStartCellData) validPlace = false;
-  if(!dropFieldCell.classList.contains('cell')) validPlace = false;
+  if(!eventTargetFieldCell.classList.contains('cell')) validPlace = false;
 
   const fieldCellsForShip = [];
   const startdragShipCellNumber = +shipDragStartCellData.numberOfCell;
   const deckCount = +shipDragStartCellData.deckCount;
-  const row = +dropFieldCell.classList[1];
-  const column = +dropFieldCell.classList[2];
+  const row = +eventTargetFieldCell.classList[1];
+  const column = +eventTargetFieldCell.classList[2];
   const {isVertical} = shipDragStartCellData;
 
   if (
-    dropFieldCell.shipCell ||
-    dropFieldCell.classList.contains("gameFieldTitleCell")
+    eventTargetFieldCell.shipCell ||
+    eventTargetFieldCell.classList.contains("gameFieldTitleCell")
   )
   validPlace = false;
 
