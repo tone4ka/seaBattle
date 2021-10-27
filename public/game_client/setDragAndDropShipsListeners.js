@@ -2,7 +2,6 @@ import installShipOnTheField from "./installingShipsOnTheField/installShipOnTheF
 import sendDataToEnemy from "./interactionWithWebsocket/sendDataToEnemy.js";
 import { gameConstants } from "./constants.js";
 import changeShotStatus from "./interactionWithWebsocket/functions/changeShotStatus.js";
-import { userFieldState } from "./constants.js";
 import playSound from "./playSound.js";
 import changeCellsBorderColor from './changeCellsBorderColor.js'
 
@@ -13,7 +12,6 @@ export default function setDragAndDropShipsListeners() {
   let draggedShip;
   let countOfInstalledShips = 0;
   const thinBlueBorderColor =  "1px solid rgb(2, 95, 156)";
-
 
   container.addEventListener("dragstart", (event) => {
     cursorStartCoordinates.left = event.clientX;
@@ -62,8 +60,7 @@ export default function setDragAndDropShipsListeners() {
         thinBlueBorderColor,
         dropFieldCell,
         shipCells, 
-        cursorStartCoordinates, 
-        userFieldState
+        cursorStartCoordinates
         );
     }
   });
@@ -78,8 +75,7 @@ export default function setDragAndDropShipsListeners() {
         thinBlueBorderColor,
         dropFieldCell,
         shipCells, 
-        cursorStartCoordinates, 
-        userFieldState
+        cursorStartCoordinates
         );
     }
   }, false);
@@ -94,8 +90,7 @@ export default function setDragAndDropShipsListeners() {
         'blueOrRed',
         dropFieldCell,
         shipCells, 
-        cursorStartCoordinates, 
-        userFieldState
+        cursorStartCoordinates
         )
     }
   }, false);
