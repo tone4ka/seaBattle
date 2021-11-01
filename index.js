@@ -6,7 +6,7 @@ import flash from "connect-flash";
 import mongoose from "mongoose";
 const PORT = process.env.PORT || 3000;
 import session from "express-session";
-import MongoStore from "connect-mongodb-session";
+import MongoStore from "connect-mongodb-session"
 let MongoStoreSession = MongoStore(session);
 import onTheSeaRoutes from "./routes/onTheSea.js";
 import homeRoutes from "./routes/home.js";
