@@ -6,7 +6,7 @@ import User from "../models/user.js";
 const router = Router();
 import mailconfig from "../mailconfig/sendmail.js";
 const { sendMail, resetPassSendMail } = mailconfig;
-
+//rfghvjergfvierhgvifd
 router.get("/login", async (req, res) => {
   res.render("auth/login", {
     title: "Авторизация",
