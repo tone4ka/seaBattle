@@ -82,12 +82,7 @@ socket.on('update', (data) => {
             }, 1000);
         } else {
           if(!userInGame) {
-            //Почему не находит???????????????????????????????????????????????????????????????????
               const disconnectUserBox = document.querySelectorAll(`.${data.disconnectedUser}Box`);
-              console.log('!!!!!!!!!!!!!!!!!!!');
-              console.log(`.${data.disconnectedUser}Box` == '.BarbossaBox');
-              console.log(disconnectUserBox)
-              console.log(disconnectUserBox.length);
               disconnectUserBox[disconnectUserBox.length-1].remove();
               if(usersList.length <= 1) {
                 usersBox.insertAdjacentHTML(
