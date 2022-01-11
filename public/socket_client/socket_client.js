@@ -137,7 +137,6 @@ usersBox.addEventListener('click', (event) => {
 socket.on('invitation created', (data) => {
     if(data.inviterName != currentUserName && data.invitedUserName == currentUserName){
         let inviterBox = document.querySelector(`.${data.inviterName}Box`);
-        // let inviterBtn = $(`.${data.inviterName}`);
         inviterBox.innerHTML = '';
         inviterBox.insertAdjacentHTML(
           "beforeend",
@@ -193,6 +192,7 @@ socket.on(`${currentUserName}`, (data) => {
 });
 
 const container = document.querySelector(".container");
+
 container.addEventListener('sendDataToEnemy', (event) => {
       socket.emit(`dataToEnemy`, {
           enemyName: currentEnemyName,
