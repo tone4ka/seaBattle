@@ -105,7 +105,7 @@ socket.on('update', (data) => {
     }
 });
 
-usersBox.click((event) => {
+usersBox.addEventListener('click', (event) => {
     if(event.target.classList.contains('btnSocket')){
         playClickSound();
         const currentBtn = event.target;
