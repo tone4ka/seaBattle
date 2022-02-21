@@ -24,7 +24,7 @@ export default function getDataFromEnemyHandler(data) {
         const img = document.createElement('img');
         img.style.width = '30px';
         img.style.height = '30px';
-        img.src = '../../game_client/assets/goodShot.png';
+        img.src = '../../src/game_client/assets/goodShot.png';
         currentCell.cellNode.appendChild(img);
         gameConstants.userShottedCells += 1;
         if(gameConstants.userShottedCells === 20) showLoosing();
@@ -39,7 +39,7 @@ export default function getDataFromEnemyHandler(data) {
         const img = document.createElement('img');
         img.style.width = '30px';
         img.style.height = '30px';
-        img.src = '../../game_client/assets/badShot.png';
+        img.src = '../../src/game_client/assets/badShot.png';
         currentCell.cellNode.appendChild(img);
     }
 }

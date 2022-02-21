@@ -34,7 +34,7 @@ export default function showDeadShip(enemyFieldState, currentShot) {//обвод
                 const img = document.createElement('img');
                 img.style.width = '30px';
                 img.style.height = '30px';
-                img.src = '../../game_client/assets/badShot.png';
+                img.src = '../../src/game_client/assets/badShot.png';
                 currentNode.innerHTML = '';
                 currentNode.appendChild(img);
             }

@@ -11,7 +11,7 @@ let userInGame = false;
 
 const audioMpr = document.createElement('audio');
 function playClickSound() {
-    audioMpr.src = `../../game_client/assets/sounds/click.mp3`;
+    audioMpr.src = `../../src/game_client/assets/sounds/click.mp3`;
     audioMpr.play();
     }
 
@@ -45,7 +45,7 @@ socket.on("connect", () => {
   });
 
 socket.on("disconnect", () => {
-  const heading = document.querySelector('h4').empty();
+  const heading = document.querySelector('h4');
   heading.innerHTML = '';
   heading.insertAdjacentHTML(
     "beforeend",
@@ -63,7 +63,7 @@ socket.on('update', (data) => {
     } else if(data.disconnectedUser){
         if (data.disconnectedUser == currentEnemyName) {
             setTimeout(() => {
-              const heading = document.querySelector('h4').empty();
+              const heading = document.querySelector('h4');
               heading.innerHTML = '';
               heading.insertAdjacentHTML(
                 "beforeend",

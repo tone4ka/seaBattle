@@ -23,14 +23,14 @@ export default function shot(cell) {
         enemyFieldState[currentRow][currentColumn].shottedCell = true;
         if(enemyFieldState[currentRow][currentColumn].shipCell){
             playSound('goodShot');
-            img.src = '../../game_client/assets/goodShot.png';
+            img.src = '../../src/game_client/assets/goodShot.png';
             sendDataToEnemy('goodShot');
             showDeadShip(enemyFieldState, gameConstants.currentShot);
             gameConstants.enemyShottedCells += 1;
             if(gameConstants.enemyShottedCells === 20) showCongratulations();
         } else {
             playSound('badShot');
-            img.src = '../../game_client/assets/badShot.png';
+            img.src = '../../src/game_client/assets/badShot.png';
             gameConstants.userShotStatus = false;
             gameConstants.enemyShotStatus = true;
             sendDataToEnemy('badShot');

@@ -9,7 +9,7 @@ export default function showCongratulations() {
     img.style.width = '308px';
     img.style.height = '400px';
     img.style.padding = '0';
-    img.src = '../../game_client/assets/flyingHighPirate.png';
+    img.src = '../../src/game_client/assets/flyingHighPirate.png';
     gameBox.innerHTML = '';
     gameBox.appendChild(img);
     gameBox.style.alignItems = 'center';
