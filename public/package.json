@@ -5,13 +5,14 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "test": "jest --verbose",
+    "test": "set \"NODE_OPTIONS=--experimental-vm-modules\" && npx jest",
     "build": "webpack"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "jest": "^27.5.1"
+    "jest": "^27.5.1",
+    "jquery": "^3.6.0"
   },
   "jest": {
     "moduleFileExtensions": [
@@ -24,7 +25,10 @@
     "moduleNameMapper": {
       "\\.(png|mp3)$": "./test/__mocks__/fileMock.js",
       "\\.(css|less)$": "./test/__mocks__/styleMock.js"
-    }
+    },
+    "transform": {},
+    "verbose": true,
+    "testEnvironment": "jest-environment-jsdom"
   },
   "devDependencies": {
     "@babel/plugin-transform-modules-commonjs": "^7.16.8",

@@ -4,6 +4,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const config = {
+    mode: 'development',
     entry: './src/game_client/game.js',
     output: {
         filename: 'bundle.js',

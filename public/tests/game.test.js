@@ -1,6 +1,6 @@
-import game from '../src/game_client/game.js';
+import $ from 'jquery'
 
-test('displays gamefield after a click', () => {
+test('Displays gamefield after a click on the "Start game" btn', () => {
   document.body.innerHTML =`
   <div class="container">
     <div class="usersBox">
@@ -13,14 +13,8 @@ test('displays gamefield after a click', () => {
   </div>
   `;
 
-  console.log('!!!!!!!!!!');
-  const x =document.querySelector(".container")
-  console.log(x)
+  import ('../src/game_client/game.js');
 
-  game();
-
-  const startGameBtn = document.querySelector('.startGameBtn');
-  startGameBtn.dispatchEvent('click');
-
+  $('.startGameBtn').click();
   expect(document.querySelector('.fieldsBox')).toBeDefined();
 });
