@@ -2,7 +2,12 @@ import getFieldCellsForShip from "./installingShipsOnTheField/getFieldCellsForSh
 import getShipDragStartCellData from './installingShipsOnTheField/getShipDragStartCellData.js';
 import { userFieldState } from "./constants.js";
 
-export default function changeCellsBorderColor(color, event, shipCells, cursorStartCoordinates) {
+export default function changeCellsBorderColor(
+  color, 
+  event, 
+  shipCells, 
+  cursorStartCoordinates
+  ) {
     const eventTargetFieldCell = event.target.classList.contains("shipCell") ? event.target.parentElement : event.target;
     const shipDragStartCellData = getShipDragStartCellData (shipCells, cursorStartCoordinates);
     const fieldCellsDataForShip = getFieldCellsForShip (shipDragStartCellData, eventTargetFieldCell, userFieldState);
