@@ -1,6 +1,8 @@
-import $ from 'jquery'
+import $ from 'jquery';
+import {jest} from '@jest/globals';
 
 test('Displays gamefield after a click on the "Start game" btn', () => {
+
   document.body.innerHTML =`
   <div class="container">
     <div class="usersBox">
@@ -13,8 +15,10 @@ test('Displays gamefield after a click on the "Start game" btn', () => {
   </div>
   `;
 
+  jest.mock(  "../src/game_client/interactionWithWebsocket/functions/showCongratulations.js");
+
   import ('../src/game_client/game.js');
 
   $('.startGameBtn').click();
-  expect(document.querySelector('.fieldsBox')).toBeDefined();
+  expect($('.fieldsBox')).toBeDefined();
 });

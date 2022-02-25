@@ -1,4 +1,5 @@
 import playSound from "../../playSound.js"
+import reloadPage from "./reloadPage.js"
 
 export default function showCongratulations() {
     const title = document.querySelector('h4');
@@ -14,5 +15,5 @@ export default function showCongratulations() {
     gameBox.appendChild(img);
     gameBox.style.alignItems = 'center';
     playSound('win');
-    setTimeout(()=>document.location.reload(), 6000);
+    setTimeout(()=> reloadPage(), 6000);
 }
